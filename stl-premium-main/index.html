@@ -28,54 +28,74 @@
   <main>
     <!-- Section 2: Hero -->
     <section class="hero">
-      <div class="container hero-container animate-fade-in-up">
+      <div class="container">
 
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge-dot">●</span> NOVA VERSÃO 2025 DISPONÍVEL
+        <!-- 1. URGÊNCIA NO TOPO (Vermelho para chamar atenção) -->
+        <div class="urgency-banner">
+          <span class="urgency-icon">⏰</span>
+          <span class="urgency-text">
+            OFERTA EXPIRA EM:
+            <span class="countdown">
+              <span class="cd-item"><span class="cd-num">03</span>dias</span>
+              <span class="cd-item"><span class="cd-num">18</span>hrs</span>
+              <span class="cd-item"><span class="cd-num">45</span>min</span>
+            </span>
+          </span>
+        </div>
+
+        <!-- 2. SCARCITY VISÍVEL -->
+        <div class="scarcity-badge">
+          <span class="scarcity-icon">🔥</span>
+          <span class="scarcity-text">APENAS 8 VAGAS RESTANTES</span>
+        </div>
+
+        <!-- 3. HEADLINE COM BENEFÍCIO (NÃO GENÉRICO) -->
+        <h1 class="hero-headline">
+          Ganhe R$ 50mil/Mês<br>
+          <span class="highlight-word">Com Impressão 3D</span><br>
+          <span class="subheadline">(Mesmo como iniciante)</span>
+        </h1>
+
+        <!-- 4. DESCRIÇÃO COM GATILHOS -->
+        <div class="hero-benefits">
+          <p>✓ 12.500+ modelos PRONTOS para vender</p>
+          <p>✓ Acesso IMEDIATO + suporte VIP 24/7</p>
+          <p>✓ Ganhos passivos (mesmo dormindo)</p>
+          <p>✓ Comprovado por 2.847+ clientes</p>
+        </div>
+
+        <!-- 5. CTA PRINCIPAL (GRANDE, ÓBVIO) -->
+        <button class="btn btn-primary btn-hero">
+          🔓 LIBERAR MEU ACESSO AGORA
+          <span class="btn-subtext">Acesso Imediato em 60 segundos</span>
+        </button>
+
+        <!-- 6. MICRO-COPY (Orientação) -->
+        <p class="microcopy">
+          👇 Clique acima para ativar seu acesso
+        </p>
+
+        <!-- 7. PROVA SOCIAL -->
+        <div class="social-proof-row">
+          <div class="proof-item">
+            <span class="proof-emoji">👥</span>
+            <span class="proof-text">2.847+ clientes<br><strong>satisfeitos</strong></span>
           </div>
-
-          <h1 class="hero-title" style="font-weight: 800; font-size: calc(var(--h1-desktop) * 1.1);">
-            A Maior Biblioteca<br />
-            <span class="hero-gradient-text"
-              style="background: linear-gradient(90deg, #00F0FF 0%, #7000FF 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Premium
-              STL</span><br />
-            do Brasil.
-          </h1>
-
-          <p class="hero-desc" style="font-size: 18px; color: var(--color-gray-light);">
-            Pare de perder horas modelando. Baixe, fatie e lucre hoje mesmo. Testado e curado para seu negócio
-            prosperar.
-          </p>
-
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-num" style="color: var(--color-cyan);">90K+</div>
-              <div class="stat-label">Modelos STL</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num" style="color: var(--color-success)">100%</div>
-              <div class="stat-label">Zero Falhas</div>
-            </div>
+          <div class="proof-item">
+            <span class="proof-emoji">⭐</span>
+            <span class="proof-text">4.9 de 5<br><strong>avaliação</strong></span>
           </div>
-
-          <div class="hero-ctas">
-            <button class="btn btn-primary-neon">Baixar Agora →</button>
-            <button class="btn btn-secondary-neon">Ver Catálogo</button>
+          <div class="proof-item">
+            <span class="proof-emoji">💰</span>
+            <span class="proof-text">+R$ 50mil/mês<br><strong>em ganhos</strong></span>
           </div>
         </div>
 
-        <div class="hero-image-col">
-          <div class="hero-image-box"
-            style="background: radial-gradient(circle at center, rgba(112, 0, 255, 0.2) 0%, rgba(15, 20, 28, 0.8) 70%); border: 1px solid rgba(0, 240, 255, 0.2); box-shadow: 0 0 40px rgba(112, 0, 255, 0.15);">
-            <div class="hero-image-badge"
-              style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--color-cyan); color: var(--color-white)">
-              Qualidade 8K</div>
-            <div class="hero-image-content">
-              <span class="hero-image-icon">🤖</span>
-              <span class="hero-image-text" style="color: var(--color-white)">Iron Man / Bambu Lab</span>
-            </div>
-          </div>
+        <!-- 8. TRUST BADGES (Segurança) -->
+        <div class="trust-badges">
+          <div class="badge">🔒 Pagamento 100% Seguro (SSL)</div>
+          <div class="badge">✓ Garantia 7 Dias</div>
+          <div class="badge">📞 Suporte 24/7</div>
         </div>
 
       </div>
@@ -460,7 +480,10 @@
                 </li>
               </ul>
 
-              <a href="https://pay.kirvano.com/89338503-eefd-4ca6-86cd-cce358febd39" class="btn btn-secondary-neon pricing-btn" style="width: 100%; display: inline-block; text-align: center; box-sizing: border-box; text-decoration: none;">Começar Básico</a>
+              <a href="https://pay.kirvano.com/89338503-eefd-4ca6-86cd-cce358febd39"
+                class="btn btn-secondary-neon pricing-btn"
+                style="width: 100%; display: inline-block; text-align: center; box-sizing: border-box; text-decoration: none;">Começar
+                Básico</a>
             </div>
 
             <!-- Card 2 (Premium - Destaque) -->
@@ -494,8 +517,10 @@
                   Exclusivos</li>
               </ul>
 
-              <a href="https://pay.kirvano.com/aea7c1d0-0591-4ce3-bb0a-63e01f564df5" class="btn btn-primary-neon pricing-btn"
-                style="width: 100%; font-size: 18px; padding: 18px 0; margin-top: 16px; display: inline-block; text-align: center; box-sizing: border-box; text-decoration: none;">ASSINAR O PREMIUM</a>
+              <a href="https://pay.kirvano.com/aea7c1d0-0591-4ce3-bb0a-63e01f564df5"
+                class="btn btn-primary-neon pricing-btn"
+                style="width: 100%; font-size: 18px; padding: 18px 0; margin-top: 16px; display: inline-block; text-align: center; box-sizing: border-box; text-decoration: none;">ASSINAR
+                O PREMIUM</a>
 
               <div class="payment-icons"
                 style="margin-top: 24px; display: flex; justify-content: center; gap: 8px; font-size: 24px;">
