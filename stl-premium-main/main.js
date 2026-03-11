@@ -30,22 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Button Clicks (Alert/Redirections)
-    const allButtons = document.querySelectorAll('.btn');
-    allButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            if (btn.tagName === 'A') {
-                // allow normal link navigation
-                return;
-            }
-            if (btn.classList.contains('btn-primary')) {
-                alert('Redirecionando para o checkout de pagamento seguro...');
-            } else if (btn.classList.contains('btn-secondary')) {
-                alert('Carregando galeria completa de modelos 3D...');
-            }
-        });
-    });
-
     // Smooth Scroll for internal links (if any anchor links added later)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
