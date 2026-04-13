@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>STL Studio — A Maior Biblioteca Premium STL do Brasil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* =====================
+   RESET & BASE
+===================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+img{display:block}
+
+/* =====================
+   FADE-IN ANIMATION
+===================== */
+.anim{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.anim.visible{opacity:1;transform:translateY(0)}
+.anim.d1{transition-delay:.1s}
+.anim.d2{transition-delay:.2s}
+.anim.d3{transition-delay:.3s}
+
+/* =====================
+   CONTAINER
+===================== */
+.container{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* =====================
+   IMAGE PLACEHOLDER
+===================== */
+.img-ph{
+  width:100%;height:100%;
+  background:#1f2937;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;
+}
+.img-ph span{color:#4b5563;font-size:12px}
+
+/* =====================
+   NAVBAR
+===================== */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(10,10,10,.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  transition:background .3s;
+}
+#nav.scrolled{background:rgba(10,10,10,.98)}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.nav-logo{font-size:1.2rem;font-weight:800;letter-spacing:-.5px}
+.nav-logo .c{color:#00e5ff}
+.nav-link{font-size:14px;font-weight:500;color:#fff;transition:color .2s}
+.nav-link:hover{color:#00e5ff}
+
+/* =====================
+   HERO
+===================== */
+#hero{
+  min-height:100vh;padding-top:80px;
+  background:radial-gradient(ellipse at 30% 50%, #0a2020 0%, #0a0a0a 65%);
+  display:flex;align-items:center;
+  position:relative;
+}
+.hero-grid{
+  display:grid;grid-template-columns:55% 45%;
+  gap:60px;align-items:center;
+  padding:60px 0;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,229,255,.08);
+  border:1px solid #00e5ff;
+  color:#00e5ff;font-size:12px;font-weight:600;
+  padding:6px 14px;border-radius:20px;
+  margin-bottom:24px;
+}
+.hero-badge .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#00e5ff;
+  animation:blink 1.5s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-h1{
+  font-size:clamp(2.4rem,4.5vw,3.8rem);
+  font-weight:800;line-height:1.15;
+  letter-spacing:-.5px;
+}
+.hero-h1 .w{color:#fff}
+.hero-h1 .c{color:#00e5ff}
+.hero-h1 .p{color:#8b5cf6}
+.hero-p{
+  font-size:1.05rem;color:#9ca3af;
+  margin-top:20px;max-width:480px;
+}
+.hero-p strong{font-weight:700;color:#fff}
+.btn-cta{
+  display:inline-block;
+  background:linear-gradient(135deg,#00e5ff,#8b5cf6);
+  color:#0a0a0a;font-weight:700;font-size:1rem;
+  padding:16px 36px;border-radius:8px;border:none;
+  cursor:pointer;margin-top:32px;
+  transition:opacity .2s,transform .2s,box-shadow .2s;
+}
+.btn-cta:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,255,.3)}
+
+/* Hero image */
+.hero-img-col{position:relative}
+.hero-img-box{
+  background:#1f2937;border-radius:16px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  aspect-ratio:4/5;position:relative;
+}
+.hero-img-box img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.hero-img-badge{
+  position:absolute;bottom:16px;left:16px;
+  background:#0a0a0a;border-radius:12px;padding:12px 18px;
+  border:1px solid rgba(255,255,255,.08);
+  z-index:2;
+}
+.hero-img-badge .big{font-size:2rem;font-weight:800;color:#00e5ff;line-height:1}
+.hero-img-badge .sm{font-size:11px;letter-spacing:1px;color:#9ca3af;display:block;margin-top:2px}
+
+/* FOMO */
+.fomo{
+  position:absolute;bottom:32px;left:24px;
+  background:#1f2937;border-radius:8px;
+  padding:12px 16px;max-width:270px;
+  border-left:3px solid #00e5ff;
+  z-index:10;
+  transition:opacity .4s ease;
+}
+.fomo .f1{font-size:12px;color:#9ca3af;margin-bottom:2px}
+.fomo .f2{font-size:13px;font-weight:600;color:#00e5ff}
+
+/* =====================
+   SECTION 2 — BENEFITS
+===================== */
+#benefits{
+  background:#111827;
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:48px 0;
+}
+.benefits-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+}
+.benefit{
+  display:flex;flex-direction:column;
+  align-items:center;text-align:center;
+}
+.benefit-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(0,229,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-bottom:16px;
+}
+.benefit h3{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:8px}
+.benefit p{font-size:.85rem;color:#9ca3af;max-width:200px}
+
+/* =====================
+   SECTION 3 — DIFFERENCE
+===================== */
+#difference{background:#0a0a0a;padding:100px 0}
+.sec-title{
+  font-size:clamp(2rem,3.5vw,2.8rem);
+  font-weight:800;text-align:center;
+  line-height:1.2;margin-bottom:20px;
+}
+.sec-sub{
+  font-size:1rem;color:#9ca3af;
+  text-align:center;max-width:600px;
+  margin:0 auto 60px;
+}
+.cards-3{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+}
+.card3{
+  background:#111827;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;padding:32px;
+  transition:border-color .3s,transform .3s;
+}
+.card3:hover{border-color:rgba(0,229,255,.3);transform:translateY(-4px)}
+.card3-icon{
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(0,229,255,.1);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+}
+.card3 h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px}
+.card3 p{font-size:.875rem;color:#9ca3af;line-height:1.65}
+
+/* =====================
+   SECTION 4 — GALLERY
+===================== */
+#gallery{background:#0a0a0a;padding:80px 0}
+.gallery-head{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;gap:32px;
+  margin-bottom:32px;flex-wrap:wrap;
+}
+.gallery-head-left h2{
+  font-size:2rem;font-weight:800;
+  color:#fff;line-height:1.2;
+}
+.gallery-head-left h2 .c{color:#00e5ff}
+.gallery-head-left p{font-size:.9rem;color:#9ca3af;margin-top:8px;max-width:440px}
+.pills{display:flex;gap:10px;flex-wrap:wrap;padding-top:6px}
+.pill{
+  background:#1f2937;
+  border:1px solid rgba(255,255,255,.1);
+  color:#fff;font-size:14px;font-family:'Inter',sans-serif;
+  padding:8px 20px;border-radius:20px;cursor:pointer;
+  transition:border-color .2s,color .2s;
+}
+.pill:hover,.pill.active{border-color:#00e5ff;color:#00e5ff}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:240px 240px;
+  gap:12px;
+}
+.gcard{
+  position:relative;border-radius:12px;overflow:hidden;
+  cursor:pointer;
+}
+.gcard.large{grid-row:span 2}
+.gcard-img{
+  position:absolute;inset:0;
+  background:#1f2937;
+}
+.gcard-img img{width:100%;height:100%;object-fit:cover}
+.gcard-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 50%);
+  transition:background .3s;
+}
+.gcard:hover .gcard-overlay{
+  background:linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(0,229,255,.08) 100%);
+}
+.gcard-tag{
+  position:absolute;top:16px;left:16px;
+  font-size:11px;font-weight:700;letter-spacing:1px;color:#00e5ff;
+  z-index:2;
+}
+.gcard-title{
+  position:absolute;bottom:16px;left:16px;
+  font-size:1.1rem;font-weight:700;color:#fff;
+  z-index:2;
+}
+
+/* =====================
+   SECTION 5 — COMPARE
+===================== */
+#compare{background:#0a0a0a;padding:80px 0}
+.compare-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:24px;max-width:900px;margin:0 auto;
+}
+.ccard{border-radius:16px;padding:40px}
+.ccard.bad{background:#f5f4f0}
+.ccard.good{
+  background:#111827;
+  border:2px solid rgba(0,229,255,.2);
+}
+.ccard-title{
+  font-weight:800;font-size:1.3rem;
+  text-align:center;margin-bottom:28px;
+  line-height:1.3;
+}
+.ccard.bad .ccard-title{color:#e53e3e}
+.ccard.good .ccard-title{color:#fff}
+.ccard-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;font-size:.95rem;
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.ccard.good .ccard-list li{border-bottom-color:rgba(255,255,255,.06);color:#fff}
+.ccard.bad .ccard-list li{color:#374151}
+.ccard-list li:last-child{border-bottom:none}
+.ci-x{color:#e53e3e;font-weight:700;flex-shrink:0;margin-top:1px}
+.ci-c{color:#00e5ff;font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* =====================
+   SECTION 6 — BONUS
+===================== */
+#bonus{background:#0a0a0a;padding:80px 0}
+.bonus-label{
+  text-align:center;font-size:12px;
+  letter-spacing:2px;color:#00e5ff;
+  font-weight:700;margin-bottom:12px;
+}
+.bonus-h2{
+  font-size:2.2rem;font-weight:800;
+  color:#fff;text-align:center;margin-bottom:8px;
+}
+.bonus-sub{
+  font-size:.9rem;color:#9ca3af;
+  text-align:center;margin-bottom:40px;
+}
+.bonus-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.bcard{
+  position:relative;border-radius:16px;overflow:hidden;
+  aspect-ratio:4/3;cursor:pointer;
+  transition:transform .3s;
+}
+.bcard:hover{transform:translateY(-6px)}
+.bcard-bg{
+  position:absolute;inset:0;background:#1f2937;
+}
+.bcard-bg img{width:100%;height:100%;object-fit:cover}
+.bcard-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.2));
+}
+.bcard-content{
+  position:absolute;inset:0;z-index:2;
+  padding:20px;display:flex;
+  flex-direction:column;justify-content:flex-end;
+}
+.bcard-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:10px;
+}
+.bcard-type{font-size:11px;color:#9ca3af;font-weight:600;margin-bottom:4px;letter-spacing:.5px}
+.bcard-name{font-size:1.1rem;font-weight:700;color:#fff}
+.bcard-desc{font-size:.8rem;color:#9ca3af;margin-top:4px;line-height:1.5}
+
+/* =====================
+   SECTION 7 — TESTIMONIALS
+===================== */
+#testimonials{
+  background:#0a0a0a;padding:80px 0;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.testi-h2{
+  font-size:2rem;font-weight:800;
+  text-align:center;margin-bottom:48px;
+}
+.testi-h2 .p{color:#8b5cf6}
+.testi-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.tcard{
+  background:#1f2937;border-radius:12px;padding:28px;
+}
+.tcard-stars{color:#00e5ff;font-size:18px;letter-spacing:2px}
+.tcard-text{
+  font-size:.9rem;color:#d1d5db;
+  line-height:1.7;margin:16px 0;
+  font-style:italic;
+}
+.tcard-divider{
+  border:none;border-top:1px solid rgba(255,255,255,.08);
+  margin-bottom:16px;
+}
+.tcard-author{display:flex;align-items:center;gap:12px}
+.tcard-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:#374151;display:flex;
+  align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;color:#fff;
+  flex-shrink:0;
+}
+.tcard-name{font-weight:600;color:#fff;font-size:.95rem}
+.tcard-role{font-size:.8rem;color:#9ca3af}
+
+/* =====================
+   SECTION 8 — PRICING
+===================== */
+#pricing{
+  background:linear-gradient(180deg,#0a0a0a 0%,#0d1117 100%);
+  padding:80px 0;
+}
+.pricing-h2{
+  font-size:2.4rem;font-weight:800;
+  color:#fff;text-align:center;margin-bottom:10px;
+}
+.pricing-sub{font-size:.95rem;color:#9ca3af;text-align:center;margin-bottom:48px}
+.pricing-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:24px;max-width:900px;margin:0 auto;
+  align-items:start;
+}
+.pcard{
+  background:#111827;border-radius:16px;padding:36px;
+  border:1px solid rgba(255,255,255,.1);
+}
+.pcard.premium{border:2px solid #00e5ff;position:relative}
+.pcard-badge{
+  position:absolute;top:-14px;left:50%;
+  transform:translateX(-50%);
+  background:#8b5cf6;
+  padding:6px 20px;border-radius:20px;
+  font-size:12px;font-weight:700;color:#fff;
+  white-space:nowrap;
+}
+.pcard-label{
+  font-size:13px;letter-spacing:1.5px;
+  font-weight:700;color:#9ca3af;
+  text-transform:uppercase;margin-bottom:14px;
+}
+.pcard-label.prem{
+  font-style:italic;color:#fff;
+  font-size:1rem;letter-spacing:0;
+}
+.pcard-stars{color:#f59e0b;font-size:1rem;margin-bottom:12px}
+.pcard-stars span{font-size:12px;font-weight:600;margin-left:6px}
+.pcard-old{
+  text-decoration:line-through;
+  color:#6b7280;font-size:14px;margin-bottom:6px;
+}
+.pcard-price-row{margin-bottom:4px}
+.pcard-price-by{color:#9ca3af;font-size:14px;display:block}
+.pcard-price{
+  font-size:2.8rem;font-weight:800;
+  color:#fff;line-height:1;
+}
+.pcard-price.cyan{color:#00e5ff;font-size:3rem}
+.price-box{
+  background:#0a0a0a;border-radius:8px;
+  padding:16px 20px;margin:12px 0 14px;
+}
+.price-box .pcard-price-by{font-size:13px}
+.pcard-desc{color:#9ca3af;font-size:14px;margin-bottom:20px}
+.pcard-divider{
+  border:none;border-top:1px solid rgba(255,255,255,.08);
+  margin:16px 0;
+}
+.pcard-list{margin-bottom:24px}
+.pcard-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:7px 0;font-size:.875rem;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  color:#9ca3af;
+}
+.pcard.premium .pcard-list li{color:#d1fae5}
+.pcard-list li:last-child{border-bottom:none}
+.ck-g{color:#9ca3af;font-weight:700;flex-shrink:0}
+.ck-c{color:#00e5ff;font-weight:700;flex-shrink:0}
+.bonus-special{
+  background:rgba(0,229,255,.08);
+  border:1px solid rgba(0,229,255,.3);
+  border-radius:8px;padding:12px 16px;
+  font-size:.875rem;font-weight:600;
+  color:#00e5ff;margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;
+}
+.btn-outline{
+  display:block;width:100%;
+  padding:14px;background:transparent;
+  border:1.5px solid rgba(255,255,255,.3);
+  color:#fff;font-weight:600;font-size:1rem;
+  font-family:'Inter',sans-serif;
+  border-radius:8px;cursor:pointer;
+  text-align:center;transition:background .2s;
+}
+.btn-outline:hover{background:rgba(255,255,255,.06)}
+.btn-cta-full{
+  display:block;width:100%;
+  padding:18px;text-align:center;
+  background:linear-gradient(135deg,#00e5ff,#8b5cf6);
+  color:#0a0a0a;font-weight:800;font-size:1rem;
+  font-family:'Inter',sans-serif;
+  border:none;border-radius:8px;cursor:pointer;
+  transition:opacity .2s,transform .2s,box-shadow .2s;
+}
+.btn-cta-full:hover{opacity:.9;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,255,.3)}
+.safe-txt{
+  color:#22c55e;font-size:12px;
+  text-align:center;margin-top:10px;
+}
+
+/* =====================
+   SECTION 9 — GUARANTEE
+===================== */
+#guarantee{background:#0a0a0a;padding:60px 0}
+.guar-card{
+  max-width:680px;margin:0 auto;
+  background:#111827;
+  border:1px solid rgba(0,229,255,.15);
+  border-radius:16px;padding:40px;
+  display:flex;align-items:flex-start;gap:28px;
+}
+.guar-icon{flex-shrink:0}
+.guar-h3{
+  font-size:1.3rem;font-weight:700;
+  color:#fff;margin-bottom:12px;
+}
+.guar-p{font-size:.9rem;color:#9ca3af;line-height:1.7}
+
+/* =====================
+   SECTION 10 — FAQ
+===================== */
+#faq{background:#0d1117;padding:80px 0}
+.faq-icon-wrap{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(0,229,255,.1);
+  border:1px solid rgba(0,229,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;
+}
+.faq-h2{
+  font-size:2rem;font-weight:800;
+  color:#fff;text-align:center;margin-bottom:8px;
+}
+.faq-sub{font-size:.9rem;color:#9ca3af;text-align:center;margin-bottom:40px}
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{
+  background:#111827;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;margin-bottom:12px;
+  overflow:hidden;
+}
+.faq-q{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:20px 24px;cursor:pointer;
+  gap:16px;user-select:none;
+}
+.faq-q span{font-size:.95rem;font-weight:600;color:#fff;transition:color .2s}
+.faq-q:hover span{color:#00e5ff}
+.faq-chevron{
+  flex-shrink:0;color:#9ca3af;
+  transition:transform .3s;
+}
+.faq-item.open .faq-chevron{transform:rotate(180deg);color:#00e5ff}
+.faq-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .4s ease;
+}
+.faq-body-inner{
+  padding:0 24px 20px;
+  border-top:1px solid rgba(255,255,255,.06);
+  padding-top:16px;
+  margin-top:0;
+  font-size:.875rem;color:#9ca3af;line-height:1.7;
+}
+
+/* =====================
+   SECTION 11 — CTA FINAL
+===================== */
+#ctafinal{
+  background:radial-gradient(ellipse at center, #0d2020 0%, #0a0a0a 70%);
+  padding:80px 0;text-align:center;
+}
+.cta-btn-giant{
+  display:inline-block;
+  background:linear-gradient(135deg,#00e5ff,#8b5cf6);
+  color:#0a0a0a;font-weight:800;font-size:1.1rem;
+  font-family:'Inter',sans-serif;
+  padding:20px 56px;border-radius:8px;border:none;
+  cursor:pointer;
+  box-shadow:0 0 40px rgba(0,229,255,.25);
+  transition:opacity .2s,transform .2s,box-shadow .2s;
+}
+.cta-btn-giant:hover{
+  opacity:.9;transform:translateY(-3px);
+  box-shadow:0 0 60px rgba(0,229,255,.4);
+}
+.cta-sub{color:#9ca3af;font-size:14px;margin-top:16px}
+
+/* =====================
+   FOOTER
+===================== */
+#footer{
+  background:#0a0a0a;
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:40px 0;
+}
+.footer-inner{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:24px;
+  flex-wrap:wrap;
+}
+.footer-logo{font-size:1.1rem;font-weight:800}
+.footer-logo .c{color:#00e5ff}
+.footer-copy{font-size:13px;color:#6b7280;margin-top:4px}
+.footer-brands{
+  font-size:12px;font-weight:600;
+  letter-spacing:2px;color:#6b7280;
+  text-align:center;
+}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:13px;color:#9ca3af;transition:color .2s}
+.footer-links a:hover{color:#00e5ff}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media(max-width:900px){
+  .benefits-grid{grid-template-columns:repeat(2,1fr)}
+  .cards-3{grid-template-columns:1fr 1fr}
+  .bonus-grid{grid-template-columns:1fr 1fr}
+  .testi-grid{grid-template-columns:1fr 1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gcard.large{grid-row:span 1}
+}
+@media(max-width:768px){
+  .hero-grid{grid-template-columns:1fr;gap:40px;padding:48px 0}
+  .compare-wrap{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .pricing-grid .pcard.premium{order:-1}
+  .footer-inner{flex-direction:column;align-items:flex-start;gap:20px}
+  .gallery-head{flex-direction:column}
+  .guar-card{flex-direction:column}
+  .cards-3{grid-template-columns:1fr}
+  .bonus-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .benefits-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr;grid-template-rows:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <div class="container nav-inner">
+    <div class="nav-logo">STL <span class="c">STUDIO</span></div>
+    <a href="https://club.membify.com.br/app/XzQYS2eOLLt0KAlSu3LQ" class="nav-link" target="_blank" rel="noopener">Área de Membros</a>
+  </div>
+</nav>
+
+<!-- SEÇÃO 1 — HERO -->
+<section id="hero">
+  <div class="container" style="width:100%">
+    <div class="hero-grid">
+
+      <!-- Coluna esquerda: texto -->
+      <div class="anim">
+        <div class="hero-badge"><span class="dot"></span>NOVA VERSÃO 2025 DISPONÍVEL</div>
+        <h1 class="hero-h1">
+          <span class="w">A Maior Biblioteca</span><br>
+          <span class="c">Premium </span><span class="p">STL</span><br>
+          <span class="w">do Brasil.</span>
+        </h1>
+        <p class="hero-p">Mais de <strong>90.000 modelos</strong> testados e curados para transformar sua impressão 3D em um negócio lucrativo. Sem falhas, sem perda de tempo.</p>
+        <a href="#checkout-premium" class="btn-cta">Liberar Acesso Vitalício →</a>
+      </div>
+
+      <!-- Coluna direita: imagem -->
+      <div class="hero-img-col anim d2">
+        <div class="hero-img-box">
+          <img src="assets/hero-image.jpg" alt="Modelos 3D impressos" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="position:absolute;inset:0">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>[ hero-image.jpg ]</span>
+          </div>
+          <div class="hero-img-badge">
+            <div class="big">90k+</div>
+            <span class="sm">ARQUIVOS VERIFICADOS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOMO popup -->
+  <div class="fomo" id="fomo">
+    <div class="f1" id="fomo-line1">Felipe Souza acabou de comprar!</div>
+    <div class="f2">STL Studio Premium</div>
+  </div>
+</section>
+
+<!-- SEÇÃO 2 — BENEFÍCIOS -->
+<section id="benefits">
+  <div class="container">
+    <div class="benefits-grid">
+
+      <div class="benefit anim">
+        <div class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <h3>Zero Modelagem</h3>
+        <p>Não precisa criar nada do zero, basta baixar e imprimir.</p>
+      </div>
+
+      <div class="benefit anim d1">
+        <div class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Qualidade Garantida</h3>
+        <p>Arquivos testados, otimizados e organizados por nichos.</p>
+      </div>
+
+      <div class="benefit anim d2">
+        <div class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <h3>Lucro Real</h3>
+        <p>Modelos validados que já vendem na Shopee e OLX.</p>
+      </div>
+
+      <div class="benefit anim d3">
+        <div class="benefit-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h3>Acesso Imediato</h3>
+        <p>Liberado automaticamente após a compra. Sem espera.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 3 — DIFERENÇA -->
+<section id="difference">
+  <div class="container">
+    <div class="anim">
+      <h2 class="sec-title">A diferença entre um <span style="color:#00e5ff">Hobby</span> e um <span style="color:#8b5cf6">Negócio</span>.</h2>
+      <p class="sec-sub">Profissionalize sua operação de impressão 3D eliminando os gargalos que impedem seu crescimento.</p>
+    </div>
+    <div class="cards-3">
+
+      <div class="card3 anim d1">
+        <div class="card3-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Otimização de Tempo</h3>
+        <p>Chega de perder horas vasculhando fóruns obscuros. Nossa biblioteca é organizada, tagueada e pronta para busca imediata.</p>
+      </div>
+
+      <div class="card3 anim d2">
+        <div class="card3-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <h3>Zero Falhas</h3>
+        <p>Arquivos testados. Eliminamos modelos corrompidos ou não-fatíaveis que desperdiçam seu filamento e sua paciência.</p>
+      </div>
+
+      <div class="card3 anim d3">
+        <div class="card3-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <h3>Alta Lucratividade</h3>
+        <p>Acervo focado em tendências de mercado. Modelos validados que vendem consistentemente na Shopee, Mercado Livre e OLX.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 4 — GALERIA -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-head anim">
+      <div class="gallery-head-left">
+        <h2>O que você vai <span class="c">criar</span> hoje?</h2>
+        <p>Explore uma coleção curada que vai desde peças artísticas complexas até soluções funcionais para o dia a dia.</p>
+      </div>
+      <div class="pills">
+        <button class="pill active">Pop Culture</button>
+        <button class="pill">Home Decor</button>
+        <button class="pill">Parts</button>
+      </div>
+    </div>
+
+    <div class="gallery-grid anim d1">
+
+      <!-- Card grande (large) -->
+      <div class="gcard large">
+        <div class="gcard-img">
+          <img src="assets/gallery-ironman.jpg" alt="Iron Man MK50" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ gallery-ironman.jpg ]</span>
+          </div>
+        </div>
+        <div class="gcard-overlay"></div>
+        <div class="gcard-tag">ACTION FIGURES</div>
+        <div class="gcard-title">Iron Man MK50</div>
+      </div>
+
+      <!-- Card Vaso -->
+      <div class="gcard">
+        <div class="gcard-img" style="height:100%;position:absolute;inset:0">
+          <img src="assets/gallery-vaso.jpg" alt="Vaso Geométrico" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ gallery-vaso.jpg ]</span>
+          </div>
+        </div>
+        <div class="gcard-overlay"></div>
+        <div class="gcard-tag">DECORAÇÃO</div>
+        <div class="gcard-title">Vaso Geométrico Low Poly</div>
+      </div>
+
+      <!-- Card Headphone -->
+      <div class="gcard">
+        <div class="gcard-img" style="height:100%;position:absolute;inset:0">
+          <img src="assets/gallery-headphone.jpg" alt="Suporte Headphone" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ gallery-headphone.jpg ]</span>
+          </div>
+        </div>
+        <div class="gcard-overlay"></div>
+        <div class="gcard-tag">UTENSÍLIOS</div>
+        <div class="gcard-title">Suporte Headphone</div>
+      </div>
+
+      <!-- Card Mandalorian -->
+      <div class="gcard">
+        <div class="gcard-img" style="height:100%;position:absolute;inset:0">
+          <img src="assets/gallery-mandalorian.jpg" alt="Capacete Mandaloriano" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ gallery-mandalorian.jpg ]</span>
+          </div>
+        </div>
+        <div class="gcard-overlay"></div>
+        <div class="gcard-tag">COSPLAY</div>
+        <div class="gcard-title">Capacete Mandaloriano</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 5 — COMPARATIVO -->
+<section id="compare">
+  <div class="container">
+    <div class="compare-wrap">
+
+      <!-- SEM -->
+      <div class="ccard bad anim">
+        <div class="ccard-title">SEM O NOSSO<br>STL STUDIO:</div>
+        <ul class="ccard-list">
+          <li><span class="ci-x">✗</span> Perde tempo caçando arquivos em sites e grupos</li>
+          <li><span class="ci-x">✗</span> Encontra modelos quebrados, incompletos ou incompatíveis</li>
+          <li><span class="ci-x">✗</span> Precisa pagar caro por cada modelo individual</li>
+          <li><span class="ci-x">✗</span> Fica limitado a poucos projetos e ideias</li>
+          <li><span class="ci-x">✗</span> Corre risco com arquivos maliciosos</li>
+        </ul>
+      </div>
+
+      <!-- COM -->
+      <div class="ccard good anim d2">
+        <div class="ccard-title">COM O NOSSO<br>STL STUDIO:</div>
+        <ul class="ccard-list">
+          <li><span class="ci-c">✓</span> Acesso instantâneo a mais de 90 mil modelos organizados</li>
+          <li><span class="ci-c">✓</span> Arquivos testados, compatíveis e prontos para uso</li>
+          <li><span class="ci-c">✓</span> Economia total, sem mensalidade nem taxas extras</li>
+          <li><span class="ci-c">✓</span> Material exclusivo com temas variados</li>
+          <li><span class="ci-c">✓</span> Suporte completo e acesso vitalício</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 6 — BÔNUS -->
+<section id="bonus">
+  <div class="container">
+    <div class="anim">
+      <p class="bonus-label">EXPANSION PACKS</p>
+      <h2 class="bonus-h2">Bônus Exclusivos</h2>
+      <p class="bonus-sub">Incluido gratuitamente no seu acesso Premium Vitalício.</p>
+    </div>
+    <div class="bonus-grid">
+
+      <!-- Card 1: Marvel -->
+      <div class="bcard anim d1">
+        <div class="bcard-bg">
+          <img src="assets/bonus-marvel.jpg" alt="Pack Marvel & DC" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ bonus-marvel.jpg ]</span>
+          </div>
+        </div>
+        <div class="bcard-overlay"></div>
+        <div class="bcard-content">
+          <div class="bcard-icon" style="background:rgba(249,115,22,.2)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="bcard-type">PREMIUM COLLECTIBLES</div>
+          <div class="bcard-name">Pack Marvel &amp; DC</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Utilitários -->
+      <div class="bcard anim d2">
+        <div class="bcard-bg">
+          <img src="assets/bonus-utilitarios.jpg" alt="Pack Utilitários" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ bonus-utilitarios.jpg ]</span>
+          </div>
+        </div>
+        <div class="bcard-overlay"></div>
+        <div class="bcard-content">
+          <div class="bcard-icon" style="background:rgba(59,130,246,.2)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="8" width="18" height="14" rx="2"/><path d="M16 8V6a4 4 0 0 0-8 0v2"/><line x1="12" y1="12" x2="12" y2="16"/></svg>
+          </div>
+          <div class="bcard-type">HOME SOLUTIONS</div>
+          <div class="bcard-name">Pack Utilitários</div>
+          <div class="bcard-desc">Resolva problemas reais. Peças que seus clientes precisam para casa e escritório.</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Articulados -->
+      <div class="bcard anim d3">
+        <div class="bcard-bg">
+          <img src="assets/bonus-articulados.jpg" alt="Pack Articulados" onerror="this.style.display='none'"/>
+          <div class="img-ph" style="height:100%">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>[ bonus-articulados.jpg ]</span>
+          </div>
+        </div>
+        <div class="bcard-overlay"></div>
+        <div class="bcard-content">
+          <div class="bcard-icon" style="background:rgba(139,92,246,.2)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
+          <div class="bcard-type">ARTICULATED</div>
+          <div class="bcard-name">Pack Articulados</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 7 — DEPOIMENTOS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="anim">
+      <h2 class="testi-h2">Quem imprime, <span class="p">aprova</span>.</h2>
+    </div>
+    <div class="testi-grid">
+
+      <div class="tcard anim d1">
+        <div class="tcard-stars">★★★★★</div>
+        <p class="tcard-text">"A qualidade dos arquivos mudou o patamar da minha loja na Shopee. Antes eu tinha muitas reclamações de peças frágeis, agora só recebo 5 estrelas."</p>
+        <hr class="tcard-divider"/>
+        <div class="tcard-author">
+          <div class="tcard-avatar">CM</div>
+          <div>
+            <div class="tcard-name">Carlos Mendes</div>
+            <div class="tcard-role">Maker Profissional</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard anim d2">
+        <div class="tcard-stars">★★★★★</div>
+        <p class="tcard-text">"O pack da Marvel é insano. A armadura do Homem de Ferro saiu perfeita na minha Ender 3, sem precisar ficar cortando o arquivo manualmente."</p>
+        <hr class="tcard-divider"/>
+        <div class="tcard-author">
+          <div class="tcard-avatar">FL</div>
+          <div>
+            <div class="tcard-name">Fernanda Lima</div>
+            <div class="tcard-role">Cosplayer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tcard anim d3">
+        <div class="tcard-stars">★★★★★</div>
+        <p class="tcard-text">"Pelo preço, eu achei que seria aqueles packs bagunçados do Google Drive. Mas a organização é impecável. Valeu cada centavo."</p>
+        <hr class="tcard-divider"/>
+        <div class="tcard-author">
+          <div class="tcard-avatar">RS</div>
+          <div>
+            <div class="tcard-name">Ricardo S.</div>
+            <div class="tcard-role">Hobbyist</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 8 — PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="anim">
+      <h2 class="pricing-h2">Investimento Único</h2>
+      <p class="pricing-sub">Escolha o pacote ideal para sua necessidade. Acesso vitalício e imediato.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <!-- BÁSICO -->
+      <div class="pcard anim d1">
+        <p class="pcard-label">PACOTE BÁSICO</p>
+        <p class="pcard-old">De R$ 189,90</p>
+        <div class="pcard-price-row">
+          <span class="pcard-price-by" style="font-size:14px;color:#9ca3af">Por apenas</span>
+          <div class="pcard-price">R$ 27,90</div>
+        </div>
+        <p class="pcard-desc">Ideal para quem está começando e quer testar a qualidade.</p>
+        <hr class="pcard-divider"/>
+        <ul class="pcard-list">
+          <li><span class="ck-g">✓</span> Pack com +50.000 arquivos STL</li>
+          <li><span class="ck-g">✓</span> Acesso vitalício</li>
+          <li><span class="ck-g">✓</span> Bônus 1: Pack de Veículos 3D Profissionais</li>
+          <li><span class="ck-g">✓</span> Bônus 2: Coleção Heróis da Marvel</li>
+        </ul>
+        <a href="#checkout-basico" class="btn-outline">Comprar Básico</a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="pcard premium anim d2">
+        <div class="pcard-badge">MELHOR CUSTO-BENEFÍCIO</div>
+        <p class="pcard-label prem"><em>STL STUDIO PREMIUM</em></p>
+        <div class="pcard-stars">★★★★★ <span>4,98 (3649 AVALIAÇÕES)</span></div>
+        <p class="pcard-old">De R$ 359,90</p>
+        <div class="price-box">
+          <span class="pcard-price-by">Por apenas</span>
+          <div class="pcard-price cyan">R$ 47,90</div>
+        </div>
+        <ul class="pcard-list">
+          <li><span class="ck-c">✓</span> Pack com +90.000 arquivos STL</li>
+          <li><span class="ck-c">✓</span> Acesso vitalício</li>
+          <li><span class="ck-c">✓</span> Bônus 1: Pack de Veículos 3D Profissionais</li>
+          <li><span class="ck-c">✓</span> Bônus 2: Coleção Heróis da Marvel</li>
+          <li><span class="ck-c">✓</span> Bônus 3: Pack de Chaveiros Personalizados</li>
+          <li><span class="ck-c">✓</span> Bônus 4: Ferramentas 3D Úteis e Inovadoras</li>
+          <li><span class="ck-c">✓</span> Bônus 5: Modelos Flexíveis e Articulados</li>
+          <li><span class="ck-c">✓</span> Bônus 6: Coleção Clássicos dos Desenhos</li>
+        </ul>
+        <div class="bonus-special"><span class="ck-c">✓</span> 🎁 BÔNUS ESPECIAL: Coleção 3D de Natal</div>
+        <a href="#checkout-premium" class="btn-cta-full">QUERO O STL STUDIO</a>
+        <p class="safe-txt">● Compra 100% Segura e Instantânea</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 9 — GARANTIA -->
+<section id="guarantee">
+  <div class="container">
+    <div class="guar-card anim">
+      <div class="guar-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="guar-h3">Garantia Incondicional de 7 Dias</h3>
+        <p class="guar-p">Temos tanta confiança na qualidade da nossa biblioteca que assumimos todo o risco. Se você não gostar da organização ou dos modelos, devolvemos 100% do seu dinheiro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 10 — FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="anim">
+      <div class="faq-icon-wrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <h2 class="faq-h2">Dúvidas Frequentes</h2>
+      <p class="faq-sub">Tudo o que você precisa saber antes de começar.</p>
+    </div>
+
+    <div class="faq-list anim d1">
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Esses arquivos funcionam na minha impressora 3D?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-body-inner">Sim! O formato STL é universal e compatível com qualquer impressora 3D do mercado.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Como eu acesso os arquivos depois de pagar?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-body-inner">O acesso é enviado automaticamente por e-mail após a confirmação do pagamento.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Preciso saber modelar em 3D pra usar o pack?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-body-inner">Não! Basta baixar e importar no seu fatiador favorito (Cura, Bambu Studio, etc.).</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Posso vender as impressões dos modelos?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-body-inner">Sim, você pode vender as peças físicas impressas. A revenda dos arquivos digitais não é permitida.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>Funciona pra iniciante em impressão 3D?</span>
+          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-body">
+          <div class="faq-body-inner">Com certeza. Nossa biblioteca é organizada e fácil de usar mesmo para quem está começando agora.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SEÇÃO 11 — CTA FINAL -->
+<section id="ctafinal">
+  <div class="container anim">
+    <a href="#checkout-premium" class="cta-btn-giant">QUERO ACESSAR O STL STUDIO AGORA →</a>
+    <p class="cta-sub">Oferta por tempo limitado. Garanta seu acesso vitalício.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-logo">STL <span class="c">STUDIO</span></div>
+      <div class="footer-copy">© 2024. Todos os direitos reservados.</div>
+    </div>
+    <div class="footer-brands">CREALITY · ELEGOO · ANYCUBIC</div>
+    <div class="footer-links">
+      <a href="#">Termos</a>
+      <a href="#">Privacidade</a>
+      <a href="#">Suporte</a>
+    </div>
+  </div>
+</footer>
+
+<!-- =====================
+     JAVASCRIPT
+===================== -->
+<script>
+// --- Navbar scroll ---
+window.addEventListener('scroll', function(){
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 80);
+});
+
+// --- IntersectionObserver fadeInUp ---
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+}, {threshold: 0.1});
+document.querySelectorAll('.anim').forEach(function(el){ obs.observe(el); });
+
+// --- FAQ Accordion ---
+document.querySelectorAll('.faq-q').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var item = btn.closest('.faq-item');
+    var body = item.querySelector('.faq-body');
+    var isOpen = item.classList.contains('open');
+    // close all
+    document.querySelectorAll('.faq-item').forEach(function(i){
+      i.classList.remove('open');
+      i.querySelector('.faq-body').style.maxHeight = '0';
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+// --- Filter pills (visual) ---
+document.querySelectorAll('.pill').forEach(function(p){
+  p.addEventListener('click', function(){
+    document.querySelectorAll('.pill').forEach(function(x){ x.classList.remove('active'); });
+    p.classList.add('active');
+  });
+});
+
+// --- FOMO popup rotation ---
+var fomoNames = [
+  'Felipe Souza',
+  'Mariana Costa',
+  'João Silva',
+  'Ana Paula',
+  'Rafael Lima'
+];
+var fomoIdx = 0;
+var fomoEl = document.getElementById('fomo');
+var fomoLine = document.getElementById('fomo-line1');
+
+function rotateFomo(){
+  fomoIdx = (fomoIdx + 1) % fomoNames.length;
+  fomoEl.style.opacity = '0';
+  setTimeout(function(){
+    fomoLine.textContent = fomoNames[fomoIdx] + ' acabou de comprar!';
+    fomoEl.style.opacity = '1';
+  }, 400);
+}
+fomoEl.style.transition = 'opacity 0.4s ease';
+setInterval(rotateFomo, 8000);
+</script>
+</body>
+</html>
