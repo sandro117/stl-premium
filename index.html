@@ -1,132 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STL Studio — A Maior Biblioteca Premium de Arquivos 3D do Brasil</title>
-  <meta name="description" content="Mais de 90.000 modelos STL testados e curados para transformar sua impressão 3D em um negócio lucrativo. Acesso vitalício por apenas R$ 47,90.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STL Studio — A Maior Biblioteca Premium STL do Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: #0F0F0F;
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { display: block; max-width: 100%; }
+    html { scroll-behavior: smooth; font-family: 'Inter', sans-serif; background: #0F0F0F; color: #fff; }
+    body { overflow-x: hidden; }
     a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
     button { cursor: pointer; font-family: inherit; }
 
-    .container {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
-    /* ── KEYFRAMES ── */
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
-    @keyframes pulse-dot {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-
-    /* ── REVEAL ── */
+    /* REVEAL ANIMATION */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.8s cubic-bezier(0.5,0,0,1), transform 0.8s cubic-bezier(0.5,0,0,1);
     }
     .reveal.active { opacity: 1; transform: translateY(0); }
-    .reveal.d1 { transition-delay: 0.1s; }
-    .reveal.d2 { transition-delay: 0.2s; }
-    .reveal.d3 { transition-delay: 0.3s; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
 
-    /* ══════════════════════════════════════
-       NAVBAR
-    ══════════════════════════════════════ */
+    /* ===================== NAVBAR ===================== */
     .navbar {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 1000;
       height: 64px;
+      z-index: 1000;
       background: rgba(15,15,15,0.95);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
-      display: flex;
-      align-items: center;
+      transition: background 0.3s;
     }
     .navbar.scrolled { background: rgba(15,15,15,0.99); }
-    .navbar .container {
+    .navbar-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
     }
-    .nav-logo {
-      font-size: 1.2rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      line-height: 1;
-    }
-    .nav-logo .stl { color: #fff; }
-    .nav-logo .studio { color: #00E5FF; }
-    .nav-members {
+    .navbar-logo { font-size: 1.2rem; letter-spacing: -0.5px; }
+    .navbar-logo span:first-child { color: #fff; font-weight: 800; }
+    .navbar-logo span:last-child { color: #00E5FF; font-weight: 800; }
+    .navbar-link {
       border: 1px solid rgba(255,255,255,0.1);
       padding: 8px 18px;
       border-radius: 20px;
       font-size: 13px;
       color: #9ca3af;
-      transition: color 0.2s;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .nav-members:hover { color: #fff; }
+    .navbar-link:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
 
-    /* ══════════════════════════════════════
-       HERO
-    ══════════════════════════════════════ */
+    /* ===================== HERO ===================== */
     .hero {
-      position: relative;
       min-height: 100vh;
       padding-top: 80px;
       background: #0F0F0F;
+      position: relative;
       display: flex;
       align-items: center;
-      overflow: hidden;
     }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-    .hero-bg-img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0.2;
-      mix-blend-mode: overlay;
-    }
-    .hero-bg-fade {
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.2; mix-blend-mode: overlay; }
+    .hero-overlay1 {
       position: absolute; inset: 0;
       background: linear-gradient(to bottom, #0F0F0F 0%, rgba(15,15,15,0.4) 50%, #0F0F0F 100%);
     }
-    .hero-bg-glow {
+    .hero-overlay2 {
       position: absolute; inset: 0;
       background: radial-gradient(ellipse at 50% 50%, rgba(0,229,255,0.05), transparent 70%);
     }
     .hero-content {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      padding: 80px 0;
-    }
-    .hero-grid {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 1160px; margin: 0 auto; padding: 80px 24px;
       display: grid;
       grid-template-columns: 55% 45%;
       gap: 60px;
@@ -146,66 +103,45 @@
       background: #00E5FF;
       border-radius: 50%;
       animation: blink 1.5s infinite;
-      flex-shrink: 0;
     }
-    .hero-badge-text {
-      color: #00E5FF;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    .hero h1 {
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
+    .hero-badge-text { color: #00E5FF; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+    .hero-h1 {
       font-size: clamp(2.6rem, 4.8vw, 4.2rem);
       font-weight: 800;
       line-height: 1.08;
       letter-spacing: -1.5px;
       margin-top: 20px;
     }
-    .hero h1 .c-white { color: #fff; }
-    .hero h1 .c-cyan { color: #00E5FF; }
-    .hero h1 .c-purple { color: #7C4DFF; }
-    .hero-desc {
+    .hero-h1 .c-cyan { color: #00E5FF; }
+    .hero-h1 .c-purple { color: #7C4DFF; }
+    .hero-p {
       color: #9ca3af;
       font-size: 1.05rem;
       max-width: 500px;
       line-height: 1.75;
       margin-top: 20px;
     }
-    .hero-desc strong { color: #fff; font-weight: 700; }
-
-    /* Social Proof Bar */
-    .hero-proof {
+    .hero-p strong { color: #fff; font-weight: 700; }
+    .hero-social-proof {
       display: flex;
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 12px;
       overflow: hidden;
       margin-top: 28px;
     }
-    .hero-proof-item {
+    .proof-item {
+      flex: 1;
       background: #1A1A1A;
       padding: 14px 20px;
-      flex: 1;
+      border-right: 1px solid rgba(255,255,255,0.07);
     }
-    .hero-proof-item + .hero-proof-item {
-      border-left: 1px solid rgba(255,255,255,0.07);
-    }
-    .hero-proof-val {
-      font-size: 1.4rem;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-    .hero-proof-val.cyan { color: #00E5FF; }
-    .hero-proof-val.gold { color: #f59e0b; }
-    .hero-proof-label {
-      font-size: 11px;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: 2px;
-    }
-
-    /* CTA Button */
-    .btn-cta {
+    .proof-item:last-child { border-right: none; }
+    .proof-num { font-size: 1.4rem; font-weight: 800; line-height: 1.2; }
+    .proof-num.cyan { color: #00E5FF; }
+    .proof-num.gold { color: #f59e0b; }
+    .proof-label { font-size: 11px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+    .hero-cta {
       display: inline-block;
       margin-top: 32px;
       background: linear-gradient(135deg, #00E5FF, #7C4DFF);
@@ -217,18 +153,10 @@
       border: none;
       transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
     }
-    .btn-cta:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(0,229,255,0.35);
-    }
-    .hero-secure {
-      font-size: 12px;
-      color: #4b5563;
-      margin-top: 12px;
-    }
+    .hero-cta:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,229,255,0.35); }
+    .hero-secure { color: #4b5563; font-size: 12px; margin-top: 12px; }
 
-    /* Hero Right - Video */
+    /* Right video */
     .hero-video-wrap {
       position: relative;
       border-radius: 20px;
@@ -252,7 +180,7 @@
       border-radius: 18px;
       z-index: 1;
     }
-    .hero-video-badge {
+    .hero-badge-90k {
       position: absolute;
       bottom: 16px; left: 16px;
       z-index: 10;
@@ -263,23 +191,10 @@
       padding: 10px 16px;
       backdrop-filter: blur(12px);
     }
-    .hero-video-badge-num {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: #00E5FF;
-      line-height: 1;
-    }
-    .hero-video-badge-label {
-      display: block;
-      font-size: 10px;
-      color: #9ca3af;
-      letter-spacing: 1px;
-      margin-top: 2px;
-    }
+    .hero-badge-90k .num { color: #00E5FF; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+    .hero-badge-90k .lbl { color: #9ca3af; font-size: 10px; letter-spacing: 1px; display: block; margin-top: 2px; }
 
-    /* ══════════════════════════════════════
-       FOMO POPUP
-    ══════════════════════════════════════ */
+    /* ===================== FOMO ===================== */
     #fomo {
       position: fixed;
       bottom: 24px; left: 24px;
@@ -298,157 +213,76 @@
     }
     .fomo-icon {
       width: 42px; height: 42px;
+      min-width: 42px;
       background: rgba(0,229,255,0.1);
       border: 1px solid rgba(0,229,255,0.2);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
     }
-    #fomo-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-    }
-    .fomo-product {
-      font-size: 12px;
-      font-weight: 600;
-      color: #00E5FF;
-    }
-    .fomo-time {
-      font-size: 11px;
-      color: #6b7280;
+    .fomo-icon svg { width: 18px; height: 18px; stroke: #00E5FF; stroke-width: 2; fill: none; }
+    #fomo-name { color: #fff; font-size: 13px; font-weight: 700; }
+    .fomo-product { color: #00E5FF; font-size: 12px; font-weight: 600; }
+    .fomo-time { color: #6b7280; font-size: 11px; }
+
+    @media (max-width: 480px) {
+      #fomo { bottom: 16px; left: 12px; right: 12px; max-width: calc(100% - 24px); }
     }
 
-    /* ══════════════════════════════════════
-       BENEFÍCIOS
-    ══════════════════════════════════════ */
-    .benefits {
-      background: #1A1A1A;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding: 52px 0;
-    }
-    .benefits-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-    }
-    .benefit-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+    /* ===================== BENEFÍCIOS ===================== */
+    .benefits { background: #1A1A1A; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 52px 0; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .benefit-item { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .benefit-icon {
       width: 52px; height: 52px;
       background: rgba(0,229,255,0.07);
       border: 1px solid rgba(0,229,255,0.15);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
     }
-    .benefit-title {
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin: 14px 0 6px;
-    }
-    .benefit-desc {
-      color: #6b7280;
-      font-size: 0.82rem;
-      max-width: 180px;
-      line-height: 1.6;
-    }
+    .benefit-icon svg { width: 22px; height: 22px; stroke: #00E5FF; stroke-width: 1.8; fill: none; }
+    .benefit-title { color: #fff; font-size: 0.95rem; font-weight: 700; margin: 14px 0 6px; }
+    .benefit-desc { color: #6b7280; font-size: 0.82rem; max-width: 180px; line-height: 1.6; }
 
-    /* ══════════════════════════════════════
-       CALCULADORA
-    ══════════════════════════════════════ */
-    .calculator {
-      background: #0F0F0F;
-      padding: 64px 0;
-    }
-    .section-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: #00E5FF;
-      text-align: center;
-      text-transform: uppercase;
-    }
-    .section-label.red { color: #ef4444; }
-    .section-h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-top: 10px;
-    }
-    .section-sub {
-      color: #9ca3af;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 40px;
-    }
+    @media (max-width: 900px) { .benefits-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .benefits-grid { grid-template-columns: 1fr; } }
+
+    /* ===================== CALCULADORA ===================== */
+    .calculator { background: #0F0F0F; padding: 64px 0; }
+    .calc-label { color: #00E5FF; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .calc-h2 { color: #fff; font-size: 2rem; font-weight: 800; text-align: center; margin-top: 8px; }
+    .calc-sub { color: #9ca3af; text-align: center; margin-bottom: 40px; margin-top: 8px; }
     .calc-card {
-      max-width: 600px;
-      margin: 0 auto;
+      max-width: 600px; margin: 0 auto;
       background: #1A1A1A;
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 16px;
       padding: 36px;
     }
-    .calc-label {
-      color: #9ca3af;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
+    .calc-slider-label { color: #9ca3af; font-size: 14px; margin-bottom: 8px; }
+    .calc-display { text-align: center; margin-top: 10px; }
+    .calc-display .val { color: #00E5FF; font-size: 2.5rem; font-weight: 800; }
+    .calc-display .unit { color: #9ca3af; font-size: 1rem; }
     input[type="range"] {
       width: 100%;
-      accent-color: #00E5FF;
+      -webkit-appearance: none;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      outline: none;
       cursor: pointer;
     }
-    .calc-val-display {
-      text-align: center;
-      margin-top: 8px;
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #00E5FF;
+      cursor: pointer;
     }
-    .calc-val-display .big {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #00E5FF;
-    }
-    .calc-val-display .unit {
-      font-size: 1rem;
-      color: #9ca3af;
-    }
-    .calc-slider-group { margin-top: 24px; }
-    .calc-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.07);
-      margin: 28px 0;
-    }
-    .calc-result-label {
-      color: #9ca3af;
-      font-size: 14px;
-      text-align: center;
-    }
-    #resultado {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      display: block;
-      margin-top: 4px;
-    }
-    .calc-result-mes {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #00E5FF;
-    }
+    .calc-slider-wrap { margin-top: 24px; }
+    .calc-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 28px 0; }
+    .calc-result-label { color: #9ca3af; font-size: 14px; text-align: center; }
+    .calc-result-num { color: #fff; font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 800; text-align: center; display: block; }
+    .calc-result-month { color: #00E5FF; font-size: 1.2rem; font-weight: 700; text-align: center; }
     .calc-context {
       background: rgba(0,229,255,0.05);
       border: 1px solid rgba(0,229,255,0.15);
@@ -459,232 +293,131 @@
       font-size: 14px;
       line-height: 1.7;
     }
-    .btn-full {
+    .calc-btn {
       display: block;
       width: 100%;
-      text-align: center;
+      margin-top: 20px;
       background: linear-gradient(135deg, #00E5FF, #7C4DFF);
       color: #0F0F0F;
       font-weight: 700;
       padding: 14px;
       border-radius: 10px;
-      margin-top: 20px;
       border: none;
       font-size: 1rem;
-      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      transition: opacity 0.2s, transform 0.2s;
     }
-    .btn-full:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(0,229,255,0.3);
-    }
+    .calc-btn:hover { opacity: 0.9; transform: translateY(-2px); }
 
-    /* ══════════════════════════════════════
-       HOBBY vs NEGÓCIO
-    ══════════════════════════════════════ */
-    .hobby {
-      background: #0F0F0F;
-      padding: 100px 0;
-    }
-    .hobby-h2 {
-      font-size: clamp(2rem, 3.2vw, 2.8rem);
-      font-weight: 800;
-      text-align: center;
-    }
-    .hobby-sub {
-      color: #9ca3af;
-      max-width: 560px;
-      margin: 16px auto 56px;
-      text-align: center;
-    }
-    .cards-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .feature-card {
+    /* ===================== HOBBY vs NEGÓCIO ===================== */
+    .hvn { background: #0F0F0F; padding: 100px 0; }
+    .hvn-h2 { font-size: clamp(2rem, 3.2vw, 2.8rem); font-weight: 800; text-align: center; }
+    .hvn-h2 .c-cyan { color: #00E5FF; }
+    .hvn-h2 .c-purple { color: #7C4DFF; }
+    .hvn-sub { color: #9ca3af; max-width: 560px; margin: 16px auto 56px; text-align: center; line-height: 1.6; }
+    .hvn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .hvn-card {
       background: #1A1A1A;
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 14px;
       padding: 32px;
       transition: border-color 0.3s, transform 0.3s;
     }
-    .feature-card:hover {
-      border-color: rgba(0,229,255,0.2);
-      transform: translateY(-4px);
-    }
-    .feature-icon {
+    .hvn-card:hover { border-color: rgba(0,229,255,0.2); transform: translateY(-4px); }
+    .hvn-icon {
       width: 48px; height: 48px;
       background: rgba(0,229,255,0.07);
       border: 1px solid rgba(0,229,255,0.12);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin-bottom: 20px;
     }
-    .feature-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-    .feature-desc {
-      font-size: 0.875rem;
-      color: #9ca3af;
-      line-height: 1.7;
-    }
+    .hvn-icon svg { width: 22px; height: 22px; stroke: #00E5FF; stroke-width: 1.8; fill: none; }
+    .hvn-title { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+    .hvn-desc { color: #9ca3af; font-size: 0.875rem; line-height: 1.75; }
 
-    /* ══════════════════════════════════════
-       CUSTO DA INAÇÃO
-    ══════════════════════════════════════ */
-    .inaction {
-      background: linear-gradient(135deg, #1a0a0a, #0F0F0F);
-      padding: 80px 0;
-    }
-    .inaction-h2 {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 40px;
-    }
-    .inaction-grid {
-      max-width: 860px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .inaction-card {
-      border-radius: 14px;
-      padding: 28px;
-    }
+    @media (max-width: 900px) { .hvn-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .hvn-grid { grid-template-columns: 1fr; } }
+
+    /* ===================== CUSTO DA INAÇÃO ===================== */
+    .inaction { background: linear-gradient(135deg, #1a0a0a, #0F0F0F); padding: 80px 0; }
+    .inaction-label { color: #ef4444; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .inaction-h2 { color: #fff; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; text-align: center; margin-top: 8px; }
+    .inaction-grid { max-width: 860px; margin: 40px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .inaction-card { border-radius: 14px; padding: 28px; }
     .inaction-card.red { background: #1a0f0f; border: 1px solid rgba(239,68,68,0.15); }
     .inaction-card.amber { background: #1a1500; border: 1px solid rgba(245,158,11,0.15); }
     .inaction-card.blue { background: #0a0f1a; border: 1px solid rgba(59,130,246,0.15); }
-    .inaction-icon {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 16px;
-    }
-    .inaction-icon.red { background: rgba(239,68,68,0.1); }
-    .inaction-icon.amber { background: rgba(245,158,11,0.1); }
-    .inaction-icon.blue { background: rgba(59,130,246,0.1); }
-    .inaction-title {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-    .inaction-desc {
-      font-size: 0.875rem;
-      color: #9ca3af;
-      line-height: 1.7;
-      margin-bottom: 14px;
-    }
-    .inaction-highlight {
-      font-size: 13px;
-      font-weight: 700;
-    }
-    .inaction-highlight.red { color: #ef4444; }
-    .inaction-highlight.amber { color: #f59e0b; }
-    .inaction-highlight.blue { color: #3b82f6; }
+    .inaction-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .inaction-icon svg { width: 20px; height: 20px; stroke-width: 1.8; fill: none; }
+    .inaction-card.red .inaction-icon { background: rgba(239,68,68,0.1); }
+    .inaction-card.red .inaction-icon svg { stroke: #ef4444; }
+    .inaction-card.amber .inaction-icon { background: rgba(245,158,11,0.1); }
+    .inaction-card.amber .inaction-icon svg { stroke: #f59e0b; }
+    .inaction-card.blue .inaction-icon { background: rgba(59,130,246,0.1); }
+    .inaction-card.blue .inaction-icon svg { stroke: #3b82f6; }
+    .inaction-title { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+    .inaction-desc { color: #9ca3af; font-size: 0.875rem; line-height: 1.75; margin-bottom: 14px; }
+    .inaction-highlight { font-size: 13px; font-weight: 700; }
+    .inaction-card.red .inaction-highlight { color: #ef4444; }
+    .inaction-card.amber .inaction-highlight { color: #f59e0b; }
+    .inaction-card.blue .inaction-highlight { color: #3b82f6; }
 
-    /* ══════════════════════════════════════
-       ÂNCORA DE VALOR
-    ══════════════════════════════════════ */
-    .anchor {
-      background: linear-gradient(180deg, #0F0F0F, #0a1a0a);
-      padding: 80px 0;
-    }
-    .anchor-h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 48px;
-    }
-    .value-table {
-      max-width: 780px;
-      margin: 0 auto;
+    @media (max-width: 900px) { .inaction-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .inaction-grid { grid-template-columns: 1fr; } }
+
+    /* ===================== ANCORA DE VALOR ===================== */
+    .anchor { background: linear-gradient(180deg, #0F0F0F, #0a1a0a); padding: 80px 0; }
+    .anchor-label { color: #00E5FF; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .anchor-h2 { color: #fff; font-size: 2rem; font-weight: 800; text-align: center; margin: 8px 0 48px; }
+    .anchor-table {
+      max-width: 780px; margin: 0 auto;
       background: #1A1A1A;
       border-radius: 14px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.07);
     }
-    .value-table-header {
+    .anchor-header {
       background: #111827;
       padding: 14px 24px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 12px;
     }
-    .value-table-header span {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .value-table-header .col-alt { color: #9ca3af; }
-    .value-table-header .col-stl { color: #00E5FF; }
-    .value-row {
+    .anchor-header span { font-size: 12px; font-weight: 700; }
+    .anchor-header .alt { color: #9ca3af; }
+    .anchor-header .stl { color: #00E5FF; }
+    .anchor-row {
       padding: 16px 24px;
       border-top: 1px solid rgba(255,255,255,0.07);
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 12px;
       align-items: center;
     }
-    .value-row.verdict { background: rgba(0,229,255,0.03); }
-    .value-row .col-name { color: #9ca3af; font-size: 0.9rem; }
-    .value-row .col-bad { color: #ef4444; font-size: 0.9rem; }
-    .value-row .col-good { color: #22c55e; font-size: 0.9rem; font-weight: 700; }
+    .anchor-row.verdict { background: rgba(0,229,255,0.03); }
+    .anchor-row .row-label { color: #9ca3af; font-size: 0.875rem; }
+    .anchor-row .bad { color: #ef4444; font-size: 0.875rem; }
+    .anchor-row .good { color: #22c55e; font-size: 0.875rem; font-weight: 700; }
 
-    /* ══════════════════════════════════════
-       GALERIA
-    ══════════════════════════════════════ */
-    .gallery {
-      background: #0F0F0F;
-      padding: 80px 0;
-    }
-    .gallery-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      align-items: center;
-      margin-bottom: 28px;
-    }
-    .gallery-h2 {
-      font-size: clamp(1.8rem, 2.5vw, 2.2rem);
-      font-weight: 800;
-      color: #fff;
-    }
+    /* ===================== GALERIA ===================== */
+    .gallery { background: #0F0F0F; padding: 80px 0; }
+    .gallery-header { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; margin-bottom: 32px; }
+    .gallery-h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; }
     .gallery-h2 .c-cyan { color: #00E5FF; }
-    .gallery-sub { color: #9ca3af; font-size: 0.9rem; line-height: 1.7; }
-    .gallery-pills {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 24px;
-    }
+    .gallery-sub { color: #9ca3af; font-size: 0.95rem; line-height: 1.6; }
+    .gallery-filters { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
     .gallery-pill {
       background: #1A1A1A;
       border: 1px solid rgba(255,255,255,0.1);
       color: #9ca3af;
-      font-size: 13px;
       padding: 7px 18px;
       border-radius: 20px;
+      font-size: 13px;
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .gallery-pill.active,
-    .gallery-pill:hover {
-      border-color: #00E5FF;
-      color: #00E5FF;
-    }
+    .gallery-pill.active, .gallery-pill:hover { border-color: #00E5FF; color: #00E5FF; }
     .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -692,274 +425,128 @@
       gap: 10px;
     }
     .gallery-card {
-      position: relative;
       border-radius: 14px;
       overflow: hidden;
       cursor: pointer;
+      position: relative;
     }
     .gallery-card.big { grid-row: span 2; }
-    .gallery-card img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s;
-    }
+    .gallery-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
     .gallery-card:hover img { transform: scale(1.05); }
-    .gallery-overlay {
+    .gallery-card-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.88), transparent 55%);
     }
-    .gallery-tag {
-      position: absolute;
-      top: 14px; left: 14px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
+    .gallery-card-tag {
+      position: absolute; top: 14px; left: 14px;
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
       color: #00E5FF;
     }
-    .gallery-title {
-      position: absolute;
-      bottom: 14px; left: 14px;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
+    .gallery-card-title {
+      position: absolute; bottom: 14px; left: 14px;
+      font-size: 1rem; font-weight: 700; color: #fff;
     }
 
-    /* ══════════════════════════════════════
-       COMPARATIVO
-    ══════════════════════════════════════ */
-    .compare {
-      background: linear-gradient(180deg, #0F0F0F, #0d1a1a 50%, #0F0F0F);
-      padding: 80px 0;
+    @media (max-width: 768px) {
+      .gallery-header { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .gallery-card.big { grid-row: span 1; height: 260px; }
+      .gallery-card { height: 200px; }
     }
-    .compare-h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 48px;
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-card.big { height: 220px; }
     }
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 860px;
-      margin: 0 auto;
-    }
+
+    /* ===================== COMPARATIVO ===================== */
+    .compare { background: linear-gradient(180deg, #0F0F0F, #0d1a1a 50%, #0F0F0F); padding: 80px 0; }
+    .compare-label { color: #00E5FF; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .compare-h2 { color: #fff; font-size: 2rem; font-weight: 800; text-align: center; margin: 8px 0 48px; }
+    .compare-grid { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .compare-card { border-radius: 16px; padding: 40px; }
     .compare-card.without { background: #f9f8f6; }
-    .compare-card.with {
-      background: #0a1f1f;
-      border: 1.5px solid rgba(0,229,255,0.2);
-    }
-    .compare-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 28px;
-    }
+    .compare-card.with { background: #0a1f1f; border: 1.5px solid rgba(0,229,255,0.2); }
+    .compare-title { font-size: 1.1rem; font-weight: 800; text-align: center; margin-bottom: 28px; }
     .compare-card.without .compare-title { color: #dc2626; }
     .compare-card.with .compare-title { color: #00E5FF; }
     .compare-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
-    .compare-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
+    .compare-item { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; line-height: 1.5; }
     .compare-card.without .compare-item { color: #374151; }
     .compare-card.with .compare-item { color: #e5e7eb; }
-    .compare-item svg { flex-shrink: 0; margin-top: 2px; }
+    .compare-item .ico { flex-shrink: 0; width: 18px; height: 18px; }
+    .compare-card.without .ico-x { stroke: #dc2626; fill: none; stroke-width: 2.5; }
+    .compare-card.with .ico-check { stroke: #00E5FF; fill: none; stroke-width: 2.5; }
 
-    /* ══════════════════════════════════════
-       BÔNUS
-    ══════════════════════════════════════ */
-    .bonuses {
-      background: #0F0F0F;
-      padding: 80px 0;
-    }
-    .bonuses-h2 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-top: 10px;
-    }
-    .bonuses-sub {
-      color: #9ca3af;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 40px;
-    }
-    .bonuses-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
+    @media (max-width: 768px) { .compare-grid { grid-template-columns: 1fr; } .compare-card.with { order: -1; } }
+
+    /* ===================== BONUS ===================== */
+    .bonuses { background: #0F0F0F; padding: 80px 0; }
+    .bonuses-label { color: #00E5FF; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .bonuses-h2 { color: #fff; font-size: 2.2rem; font-weight: 800; text-align: center; margin-top: 8px; }
+    .bonuses-sub { color: #9ca3af; text-align: center; margin: 8px 0 40px; }
+    .bonuses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .bonus-card {
       aspect-ratio: 4/3;
       border-radius: 16px;
       overflow: hidden;
       position: relative;
-      transition: transform 0.35s, box-shadow 0.35s;
       cursor: pointer;
+      transition: transform 0.35s, box-shadow 0.35s;
     }
-    .bonus-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    }
-    .bonus-card-bg {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    .bonus-card-placeholder {
-      position: absolute; inset: 0;
-      background: #1A1A1A;
-    }
-    .bonus-card-overlay {
+    .bonus-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .bonus-card img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .bonus-bg {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.1));
     }
-    .bonus-card-content {
-      position: absolute;
-      bottom: 20px; left: 20px; right: 20px;
-      z-index: 2;
-    }
+    .bonus-content { position: absolute; bottom: 20px; left: 20px; right: 20px; z-index: 2; }
     .bonus-icon {
       width: 40px; height: 40px;
-      border-radius: 10px;
+      border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 10px;
     }
-    .bonus-label {
-      font-size: 11px;
-      color: #9ca3af;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .bonus-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-    }
-    .bonus-desc {
-      font-size: 0.8rem;
-      color: #9ca3af;
-      margin-top: 4px;
-    }
+    .bonus-icon svg { width: 18px; height: 18px; fill: none; stroke-width: 2; }
+    .bonus-category { color: #9ca3af; font-size: 11px; font-weight: 600; letter-spacing: 1px; margin-bottom: 4px; }
+    .bonus-title { color: #fff; font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .bonus-desc { color: #9ca3af; font-size: 0.8rem; }
 
-    /* ══════════════════════════════════════
-       DEPOIMENTOS
-    ══════════════════════════════════════ */
-    .testimonials {
-      background: #0d1117;
-      padding: 80px 0;
-    }
-    .testimonials-h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-    }
+    @media (max-width: 768px) { .bonuses-grid { grid-template-columns: 1fr; } }
+
+    /* ===================== DEPOIMENTOS ===================== */
+    .testimonials { background: #0d1117; padding: 80px 0; }
+    .testimonials-h2 { font-size: 2rem; font-weight: 800; text-align: center; }
     .testimonials-h2 .c-purple { color: #7C4DFF; }
-    .counter-bar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin: 16px 0 48px;
-    }
-    .pulse-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulse-dot 2s infinite;
-    }
-    .counter-text { font-size: 14px; color: #9ca3af; }
-    .counter-text strong { color: #fff; font-weight: 600; }
-    .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .testimonial-card {
+    .live-counter { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 16px 0 48px; }
+    .live-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0; } }
+    .live-text { color: #9ca3af; font-size: 14px; }
+    .live-text #counter { font-weight: 700; color: #fff; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card {
       background: #1A1A1A;
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 14px;
       padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
     }
-    .testimonial-stars { font-size: 15px; color: #f59e0b; }
-    .testimonial-quote {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #00E5FF;
-      line-height: 0.6;
-      margin-bottom: 10px;
-      display: block;
-    }
-    .testimonial-text {
-      font-size: 0.88rem;
-      color: #d1d5db;
-      line-height: 1.8;
-      font-style: italic;
-    }
-    .testimonial-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.07);
-    }
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .testimonial-avatar {
-      width: 38px; height: 38px;
-      background: #374151;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      flex-shrink: 0;
-    }
-    .testimonial-name {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #fff;
-    }
-    .testimonial-role { font-size: 0.78rem; color: #6b7280; }
+    .testi-stars { color: #f59e0b; font-size: 15px; }
+    .testi-quote { color: #00E5FF; font-size: 3.5rem; font-weight: 800; line-height: 0.6; margin-bottom: 10px; display: block; }
+    .testi-text { font-size: 0.88rem; color: #d1d5db; line-height: 1.8; font-style: italic; margin-bottom: 16px; }
+    .testi-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 16px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar { width: 38px; height: 38px; min-width: 38px; background: #374151; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; }
+    .testi-name { font-size: 0.9rem; font-weight: 600; color: #fff; }
+    .testi-role { font-size: 0.78rem; color: #6b7280; }
 
-    /* ══════════════════════════════════════
-       PRICING
-    ══════════════════════════════════════ */
-    .pricing {
-      background: linear-gradient(180deg, #0F0F0F, #0d1a1a);
-      padding: 88px 0;
-    }
-    .pricing-h2 {
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-top: 10px;
-    }
-    .pricing-sub {
-      color: #9ca3af;
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 28px;
-    }
-    .pricing-urgency {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .urgency-pill {
+    @media (max-width: 900px) { .testi-grid { grid-template-columns: 1fr; } }
+
+    /* ===================== PRICING ===================== */
+    .pricing { background: linear-gradient(180deg, #0F0F0F, #0d1a1a); padding: 88px 0; }
+    .pricing-label { color: #00E5FF; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-align: center; }
+    .pricing-h2 { color: #fff; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; text-align: center; margin: 8px 0; }
+    .pricing-sub { color: #9ca3af; text-align: center; margin-bottom: 24px; }
+    .pricing-urgency { text-align: center; margin-bottom: 40px; }
+    .pricing-badge-pill {
       display: inline-block;
       background: rgba(245,158,11,0.1);
       border: 1px solid rgba(245,158,11,0.25);
@@ -969,31 +556,13 @@
       font-size: 13px;
       font-weight: 600;
     }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      max-width: 860px;
-      margin: 0 auto;
-      align-items: start;
-    }
-    .plan-card {
-      border-radius: 16px;
-      padding: 36px;
-    }
-    .plan-card.basic {
-      background: #1A1A1A;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .plan-card.premium {
-      background: #0a1f1f;
-      border: 2px solid #00E5FF;
-      position: relative;
-    }
-    .plan-badge {
+    .pricing-grid { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .pricing-card { border-radius: 16px; padding: 36px; }
+    .pricing-card.basic { background: #1A1A1A; border: 1px solid rgba(255,255,255,0.08); }
+    .pricing-card.premium { background: #0a1f1f; border: 2px solid #00E5FF; position: relative; }
+    .premium-badge {
       position: absolute;
-      top: -15px;
-      left: 50%;
+      top: -15px; left: 50%;
       transform: translateX(-50%);
       background: linear-gradient(135deg, #00E5FF, #7C4DFF);
       color: #0F0F0F;
@@ -1003,31 +572,13 @@
       border-radius: 20px;
       white-space: nowrap;
     }
-    .plan-name {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #6b7280;
-      margin-bottom: 8px;
-    }
-    .plan-name.premium { color: #fff; font-size: 1rem; font-style: italic; letter-spacing: 0; text-transform: none; }
-    .plan-stars { font-size: 14px; color: #f59e0b; }
-    .plan-stars-count { font-size: 12px; font-weight: 600; color: #f59e0b; margin-left: 4px; }
-    .plan-original {
-      font-size: 14px;
-      color: #4b5563;
-      text-decoration: line-through;
-      margin-top: 6px;
-    }
-    .plan-price-label { font-size: 13px; color: #9ca3af; }
-    .plan-price {
-      font-size: 3rem;
-      font-weight: 800;
-      color: #fff;
-      line-height: 1.05;
-    }
-    .plan-price.premium { color: #00E5FF; }
+    .plan-name { color: #6b7280; font-size: 11px; font-weight: 700; letter-spacing: 2px; margin-bottom: 8px; }
+    .plan-name.white { color: #fff; font-size: 1rem; font-weight: 800; font-style: italic; letter-spacing: 0; }
+    .plan-rating { color: #f59e0b; font-size: 0.875rem; font-weight: 600; margin-bottom: 10px; }
+    .plan-old { color: #4b5563; font-size: 14px; text-decoration: line-through; margin-bottom: 4px; }
+    .plan-by { color: #9ca3af; font-size: 13px; }
+    .plan-price { color: #fff; font-size: 3rem; font-weight: 800; line-height: 1.1; }
+    .plan-price.cyan { color: #00E5FF; font-size: 3.4rem; line-height: 1; }
     .plan-price-box {
       background: rgba(0,229,255,0.05);
       border: 1px solid rgba(0,229,255,0.15);
@@ -1035,75 +586,60 @@
       padding: 18px 22px;
       margin: 14px 0;
     }
-    .plan-desc { font-size: 13px; color: #9ca3af; margin-bottom: 20px; }
-    .plan-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.07);
-      margin: 20px 0;
-    }
-    .plan-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-    .plan-list-item {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 0.875rem;
-      line-height: 1.5;
-    }
-    .plan-list-item.basic-item { color: #9ca3af; }
-    .plan-list-item.premium-item { color: #d1fae5; }
-    .plan-list-item svg { flex-shrink: 0; margin-top: 2px; }
+    .plan-desc { color: #9ca3af; font-size: 13px; margin-bottom: 20px; }
+    .plan-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 16px 0; }
+    .plan-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+    .plan-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; }
+    .pricing-card.basic .plan-feature { color: #9ca3af; }
+    .pricing-card.premium .plan-feature { color: #d1fae5; }
+    .plan-feature svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; fill: none; stroke-width: 2.5; }
+    .pricing-card.basic .plan-feature svg { stroke: #6b7280; }
+    .pricing-card.premium .plan-feature svg { stroke: #00E5FF; }
     .plan-special {
       background: rgba(0,229,255,0.06);
       border: 1px solid rgba(0,229,255,0.2);
       border-radius: 10px;
       padding: 12px 16px;
       margin-bottom: 22px;
+      color: #00E5FF;
       font-size: 0.875rem;
       font-weight: 700;
-      color: #00E5FF;
     }
-    .btn-plan-outline {
-      display: block;
-      width: 100%;
+    .plan-btn {
+      display: block; width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
       text-align: center;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .plan-btn.outline {
       background: transparent;
       border: 1px solid rgba(255,255,255,0.15);
       color: #6b7280;
-      padding: 13px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: border-color 0.2s;
     }
-    .btn-plan-outline:hover { border-color: rgba(255,255,255,0.3); }
-    .btn-plan-primary {
-      display: block;
-      width: 100%;
-      text-align: center;
+    .plan-btn.outline:hover { border-color: rgba(255,255,255,0.3); }
+    .plan-btn.gradient {
       background: linear-gradient(135deg, #00E5FF, #7C4DFF);
       color: #0F0F0F;
-      padding: 18px;
-      border-radius: 10px;
       border: none;
       font-size: 1rem;
+      padding: 18px;
       font-weight: 800;
-      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
     }
-    .btn-plan-primary:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 48px rgba(0,229,255,0.35);
-    }
-    .plan-secure { font-size: 12px; color: #22c55e; text-align: center; margin-top: 12px; }
+    .plan-btn.gradient:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 12px 48px rgba(0,229,255,0.35); }
+    .plan-secure { color: #22c55e; font-size: 12px; text-align: center; margin-top: 12px; }
 
-    /* ══════════════════════════════════════
-       GARANTIA
-    ══════════════════════════════════════ */
-    .guarantee {
-      background: #0F0F0F;
-      padding: 64px 0;
+    @media (max-width: 768px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.premium { order: -1; }
     }
+
+    /* ===================== GARANTIA ===================== */
+    .guarantee { background: #0F0F0F; padding: 64px 0; }
     .guarantee-card {
-      max-width: 700px;
-      margin: 0 auto;
+      max-width: 700px; margin: 0 auto;
       background: #0a1f1f;
       border: 1px solid rgba(0,229,255,0.2);
       border-radius: 18px;
@@ -1113,41 +649,25 @@
       align-items: flex-start;
     }
     .guarantee-icon { flex-shrink: 0; }
-    .guarantee-h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-    .guarantee-strong {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-    .guarantee-text {
-      font-size: 0.9rem;
-      color: #9ca3af;
-      line-height: 1.75;
-    }
+    .guarantee-icon svg { width: 64px; height: 64px; stroke: #00E5FF; stroke-width: 1.5; fill: none; }
+    .guarantee-h3 { color: #fff; font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; }
+    .guarantee-sub { color: #fff; font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .guarantee-text { color: #9ca3af; font-size: 0.9rem; line-height: 1.75; }
     .guarantee-box {
       background: rgba(0,229,255,0.05);
       border-radius: 10px;
       padding: 14px 16px;
       margin-top: 16px;
+      color: #00E5FF;
       font-size: 0.875rem;
       font-weight: 700;
       font-style: italic;
-      color: #00E5FF;
     }
 
-    /* ══════════════════════════════════════
-       FAQ
-    ══════════════════════════════════════ */
-    .faq {
-      background: #0d1117;
-      padding: 80px 0;
-    }
+    @media (max-width: 600px) { .guarantee-card { flex-direction: column; padding: 28px; } }
+
+    /* ===================== FAQ ===================== */
+    .faq { background: #0d1117; padding: 80px 0; }
     .faq-icon-wrap {
       width: 44px; height: 44px;
       background: rgba(0,229,255,0.08);
@@ -1155,22 +675,13 @@
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 16px;
-    }
-    .faq-h2 {
-      font-size: 2rem;
+      color: #00E5FF;
+      font-size: 1.2rem;
       font-weight: 800;
-      color: #fff;
-      text-align: center;
-      margin-bottom: 6px;
     }
-    .faq-sub {
-      color: #9ca3af;
-      text-align: center;
-    }
-    .faq-list {
-      max-width: 680px;
-      margin: 40px auto 0;
-    }
+    .faq-h2 { color: #fff; font-size: 2rem; font-weight: 800; text-align: center; }
+    .faq-sub { color: #9ca3af; text-align: center; margin-top: 6px; }
+    .faq-list { max-width: 680px; margin: 40px auto 0; }
     .faq-item {
       background: #1A1A1A;
       border: 1px solid rgba(255,255,255,0.07);
@@ -1186,53 +697,22 @@
       align-items: center;
       gap: 16px;
     }
-    .faq-question {
-      color: #fff;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-    .faq-chevron {
-      flex-shrink: 0;
-      color: #6b7280;
-      transition: transform 0.35s, color 0.35s;
-    }
-    .faq-item.open .faq-chevron {
-      transform: rotate(180deg);
-      color: #00E5FF;
-    }
-    .faq-body {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease;
-    }
-    .faq-body-inner {
-      padding: 0 24px 18px;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding-top: 14px;
-    }
-    .faq-answer {
-      color: #9ca3af;
-      font-size: 0.875rem;
-      line-height: 1.75;
-    }
+    .faq-question { color: #fff; font-weight: 600; font-size: 0.9rem; }
+    .faq-chevron { width: 18px; height: 18px; flex-shrink: 0; transition: transform 0.3s, stroke 0.3s; stroke: #6b7280; fill: none; stroke-width: 2; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); stroke: #00E5FF; }
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .faq-body-inner { padding: 0 24px 18px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 14px; color: #9ca3af; font-size: 0.875rem; line-height: 1.75; }
 
-    /* ══════════════════════════════════════
-       CTA FINAL
-    ══════════════════════════════════════ */
+    /* ===================== CTA FINAL ===================== */
     .cta-final {
       background: radial-gradient(ellipse at center, rgba(0,229,255,0.04), #0F0F0F 65%);
       padding: 96px 0;
       text-align: center;
     }
-    .cta-final-context { font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px; }
-    .cta-final-h2 {
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 14px;
-    }
-    .cta-final-sub { font-size: 1rem; color: #9ca3af; margin-bottom: 36px; }
-    .btn-cta-xl {
+    .cta-final-pre { color: #9ca3af; font-size: 0.9rem; margin-bottom: 8px; }
+    .cta-final-h2 { color: #fff; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 14px; }
+    .cta-final-sub { color: #9ca3af; font-size: 1rem; margin-bottom: 36px; }
+    .cta-final-btn {
       display: inline-block;
       background: linear-gradient(135deg, #00E5FF, #7C4DFF);
       color: #0F0F0F;
@@ -1243,740 +723,665 @@
       box-shadow: 0 0 60px rgba(0,229,255,0.2);
       transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
     }
-    .btn-cta-xl:hover {
-      opacity: 0.9;
-      transform: translateY(-3px);
-      box-shadow: 0 0 80px rgba(0,229,255,0.35);
-    }
-    .cta-final-micro { font-size: 13px; color: #4b5563; margin-top: 16px; }
+    .cta-final-btn:hover { opacity: 0.9; transform: translateY(-3px); box-shadow: 0 0 80px rgba(0,229,255,0.35); }
+    .cta-final-micro { color: #4b5563; font-size: 13px; margin-top: 16px; }
 
-    /* ══════════════════════════════════════
-       FOOTER
-    ══════════════════════════════════════ */
-    .footer {
-      background: #0F0F0F;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 36px 0;
-    }
-    .footer-grid {
+    /* ===================== FOOTER ===================== */
+    .footer { background: #0F0F0F; border-top: 1px solid rgba(255,255,255,0.05); padding: 36px 0; }
+    .footer-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 24px;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       align-items: center;
-      gap: 24px;
     }
-    .footer-logo { font-size: 1.1rem; font-weight: 800; }
-    .footer-logo .stl { color: #fff; }
-    .footer-logo .studio { color: #00E5FF; }
-    .footer-copy { font-size: 12px; color: #4b5563; margin-top: 4px; }
-    .footer-brands {
-      font-size: 11px;
-      font-weight: 600;
-      color: #374151;
-      letter-spacing: 2px;
-      text-align: center;
-    }
-    .footer-links {
-      display: flex;
-      gap: 16px;
-      justify-content: flex-end;
-    }
-    .footer-links a {
-      font-size: 13px;
-      color: #6b7280;
-      transition: color 0.2s;
-    }
+    .footer-logo span:first-child { color: #fff; font-weight: 800; font-size: 1.1rem; }
+    .footer-logo span:last-child { color: #00E5FF; font-weight: 800; font-size: 1.1rem; }
+    .footer-copy { color: #4b5563; font-size: 12px; margin-top: 4px; }
+    .footer-brands { color: #374151; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-align: center; }
+    .footer-links { display: flex; gap: 16px; justify-content: flex-end; }
+    .footer-links a { color: #6b7280; font-size: 13px; transition: color 0.2s; }
     .footer-links a:hover { color: #9ca3af; }
 
-    /* ══════════════════════════════════════
-       RESPONSIVE
-    ══════════════════════════════════════ */
-    @media (max-width: 900px) {
-      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
-      .cards-3 { grid-template-columns: repeat(2, 1fr); }
-      .inaction-grid { grid-template-columns: repeat(2, 1fr); }
-      .bonuses-grid { grid-template-columns: repeat(2, 1fr); }
-      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
-    }
     @media (max-width: 768px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      .hero-video-wrap { aspect-ratio: 16/9; max-width: 100%; }
-      .compare-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .plan-card.premium { order: -1; }
-      .footer-grid { grid-template-columns: 1fr; align-items: flex-start; gap: 16px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 16px; align-items: flex-start; }
+      .footer-brands { text-align: left; }
       .footer-links { justify-content: flex-start; }
-      .gallery-header { grid-template-columns: 1fr; }
+      .hero-content { grid-template-columns: 1fr; padding: 40px 24px; }
+      .hero-video-wrap { aspect-ratio: 16/9; max-width: 100%; }
     }
     @media (max-width: 480px) {
-      .benefits-grid { grid-template-columns: 1fr; }
-      .gallery-grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
-      }
-      .gallery-card.big { grid-row: span 1; height: 260px; }
-      .gallery-card { height: 200px; }
-      .hero-proof { flex-direction: column; }
-      .hero-proof-item + .hero-proof-item { border-left: none; border-top: 1px solid rgba(255,255,255,0.07); }
-      .cards-3 { grid-template-columns: 1fr; }
-      .inaction-grid { grid-template-columns: 1fr; }
-      .bonuses-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      #fomo { bottom: 16px; left: 12px; right: 12px; max-width: calc(100% - 24px); }
-      .guarantee-card { flex-direction: column; }
+      .hero-social-proof { flex-direction: column; }
+      .proof-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+      .proof-item:last-child { border-bottom: none; }
     }
   </style>
 </head>
-<body oncontextmenu="return false">
+<body>
 
-<!-- ══════════════ NAVBAR ══════════════ -->
-<nav class="navbar" id="navbar">
-  <div class="container">
-    <div class="nav-logo"><span class="stl">STL</span><span class="studio">STUDIO</span></div>
-    <a href="https://club.membify.com.br/app/XzQYS2eOLLt0KAlSu3LQ" class="nav-members" target="_blank" rel="noopener">Área de Membros</a>
-  </div>
-</nav>
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-logo">
+        <span>STL</span><span>STUDIO</span>
+      </div>
+      <a href="https://club.membify.com.br/app/XzQYS2eOLLt0KAlSu3LQ" class="navbar-link" target="_blank" rel="noopener">Área de Membros</a>
+    </div>
+  </nav>
 
-<!-- ══════════════ HERO ══════════════ -->
-<section class="hero" id="hero">
-  <div class="hero-bg">
-    <img class="hero-bg-img" src="https://images.unsplash.com/photo-1633465133501-8c460f7f2b93?q=80&w=2576&auto=format&fit=crop" alt="Impressão 3D background" loading="eager">
-    <div class="hero-bg-fade"></div>
-    <div class="hero-bg-glow"></div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1633465133501-8c460f7f2b93?q=80&w=2576&auto=format&fit=crop" alt="" fetchpriority="high" />
+      <div class="hero-overlay1"></div>
+      <div class="hero-overlay2"></div>
+    </div>
+    <div class="hero-content">
+      <!-- Left -->
+      <div>
+        <div class="hero-badge reveal">
+          <div class="hero-badge-dot"></div>
+          <span class="hero-badge-text">NOVA VERSÃO 2025 DISPONÍVEL</span>
+        </div>
+        <h1 class="hero-h1 reveal d1">
+          A Maior Biblioteca<br>
+          <span class="c-cyan">Premium </span><span class="c-purple">STL</span><br>
+          do Brasil.
+        </h1>
+        <p class="hero-p reveal d2">
+          Mais de <strong>90.000 modelos</strong> testados e curados para transformar sua impressão 3D em um negócio lucrativo. Sem falhas, sem perda de tempo.
+        </p>
+        <div class="hero-social-proof reveal d2">
+          <div class="proof-item">
+            <div class="proof-num cyan">90k+</div>
+            <div class="proof-label">Arquivos verificados</div>
+          </div>
+          <div class="proof-item">
+            <div class="proof-num gold">4.98 ★</div>
+            <div class="proof-label">Avaliação média</div>
+          </div>
+          <div class="proof-item">
+            <div class="proof-num cyan">7 dias</div>
+            <div class="proof-label">Garantia total</div>
+          </div>
+        </div>
+        <a href="#checkout-premium" class="hero-cta reveal d3">Liberar Acesso Vitalício →</a>
+        <p class="hero-secure reveal d3">🔒 Compra segura · Acesso imediato · Garantia de 7 dias</p>
+      </div>
+      <!-- Right -->
+      <div class="reveal d2">
+        <div class="hero-video-wrap">
+          <div class="hero-video-blur"></div>
+          <iframe
+            src="https://player-vz-12289864-8f6.tv.pandavideo.com.br/embed/?v=be61d393-1d71-4cf8-9f81-4a204d299bad"
+            allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
+            allowfullscreen
+            fetchpriority="high"
+          ></iframe>
+          <div class="hero-badge-90k">
+            <span class="num">90k+</span>
+            <span class="lbl">ARQUIVOS VERIFICADOS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOMO -->
+  <div id="fomo">
+    <div class="fomo-icon">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    </div>
+    <div>
+      <div id="fomo-name">Lucas Oliveira acabou de comprar!</div>
+      <div class="fomo-product">Comprou o Pacote Premium</div>
+      <div class="fomo-time">há 1 minuto</div>
+    </div>
   </div>
-  <div class="hero-content">
+
+  <!-- BENEFÍCIOS -->
+  <section class="benefits">
     <div class="container">
-      <div class="hero-grid">
-        <!-- LEFT -->
+      <div class="benefits-grid">
+        <div class="benefit-item reveal">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+          <div class="benefit-title">Zero Modelagem</div>
+          <div class="benefit-desc">Não precisa criar nada. Baixe, fatie e imprima.</div>
+        </div>
+        <div class="benefit-item reveal d1">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="benefit-title">Qualidade Verificada</div>
+          <div class="benefit-desc">Arquivos testados e organizados por nicho de venda.</div>
+        </div>
+        <div class="benefit-item reveal d2">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="benefit-title">Vendas Comprovadas</div>
+          <div class="benefit-desc">Modelos que já vendem na Shopee e Mercado Livre.</div>
+        </div>
+        <div class="benefit-item reveal d3">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="benefit-title">Acesso Imediato</div>
+          <div class="benefit-desc">Liberado automaticamente após a confirmação.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALCULADORA -->
+  <section class="calculator">
+    <div class="container">
+      <div class="calc-label reveal">CALCULE SEU RETORNO</div>
+      <h2 class="calc-h2 reveal d1">Quanto você pode faturar?</h2>
+      <p class="calc-sub reveal d2">Arraste o slider e veja o potencial do seu negócio.</p>
+      <div class="calc-card reveal d2">
         <div>
-          <div class="hero-badge">
-            <div class="hero-badge-dot"></div>
-            <span class="hero-badge-text">NOVA VERSÃO 2025 DISPONÍVEL</span>
-          </div>
-          <h1>
-            <span class="c-white">A Maior Biblioteca</span><br>
-            <span class="c-cyan">Premium </span><span class="c-purple">STL</span><br>
-            <span class="c-white">do Brasil.</span>
-          </h1>
-          <p class="hero-desc">
-            Mais de <strong>90.000 modelos</strong> testados e curados para transformar sua impressão 3D em um negócio lucrativo. Sem falhas, sem perda de tempo.
-          </p>
-          <div class="hero-proof">
-            <div class="hero-proof-item">
-              <div class="hero-proof-val cyan">90k+</div>
-              <div class="hero-proof-label">Arquivos verificados</div>
-            </div>
-            <div class="hero-proof-item">
-              <div class="hero-proof-val gold">4.98 ★</div>
-              <div class="hero-proof-label">Avaliação média</div>
-            </div>
-            <div class="hero-proof-item">
-              <div class="hero-proof-val cyan">7 dias</div>
-              <div class="hero-proof-label">Garantia total</div>
-            </div>
-          </div>
-          <a href="#checkout-premium" class="btn-cta">Liberar Acesso Vitalício →</a>
-          <p class="hero-secure">🔒 Compra segura · Acesso imediato · Garantia de 7 dias</p>
-        </div>
-        <!-- RIGHT -->
-        <div>
-          <div class="hero-video-wrap">
-            <div class="hero-video-blur"></div>
-            <iframe
-              src="https://player-vz-12289864-8f6.tv.pandavideo.com.br/embed/?v=be61d393-1d71-4cf8-9f81-4a204d299bad"
-              allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
-              allowfullscreen
-              fetchpriority="high"
-            ></iframe>
-            <div class="hero-video-badge">
-              <div class="hero-video-badge-num">90k+</div>
-              <span class="hero-video-badge-label">ARQUIVOS VERIFICADOS</span>
-            </div>
+          <p class="calc-slider-label">Peças vendidas por mês:</p>
+          <input type="range" id="s1" min="10" max="500" value="50" step="10" />
+          <div class="calc-display">
+            <span class="val" id="v1">50</span><span class="unit"> peças</span>
           </div>
         </div>
+        <div class="calc-slider-wrap">
+          <p class="calc-slider-label">Ticket médio por peça:</p>
+          <input type="range" id="s2" min="10" max="150" value="35" step="5" />
+          <div class="calc-display">
+            <span class="unit">R$ </span><span class="val" id="v2">35</span>
+          </div>
+        </div>
+        <div class="calc-divider"></div>
+        <p class="calc-result-label">Seu faturamento estimado:</p>
+        <span class="calc-result-num" id="resultado">R$ 1.750</span>
+        <div class="calc-result-month">/mês</div>
+        <div class="calc-context" id="contexto"></div>
+        <a href="#checkout-premium" class="calc-btn">Quero começar agora →</a>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ FOMO POPUP ══════════════ -->
-<div id="fomo">
-  <div class="fomo-icon">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-    </svg>
-  </div>
-  <div>
-    <div id="fomo-name">Lucas Oliveira acabou de comprar!</div>
-    <div class="fomo-product">Comprou o Pacote Premium</div>
-    <div class="fomo-time">há 1 minuto</div>
-  </div>
-</div>
-
-<!-- ══════════════ BENEFÍCIOS ══════════════ -->
-<section class="benefits">
-  <div class="container">
-    <div class="benefits-grid">
-      <div class="benefit-item reveal">
-        <div class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+  <!-- HOBBY vs NEGÓCIO -->
+  <section class="hvn">
+    <div class="container">
+      <h2 class="hvn-h2 reveal">
+        A diferença entre um <span class="c-cyan">Hobby</span> e um <span class="c-purple">Negócio.</span>
+      </h2>
+      <p class="hvn-sub reveal d1">Profissionalize sua operação de impressão 3D eliminando os gargalos que impedem seu crescimento.</p>
+      <div class="hvn-grid">
+        <div class="hvn-card reveal">
+          <div class="hvn-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="hvn-title">Otimização de Tempo</div>
+          <p class="hvn-desc">Chega de perder horas vasculhando fóruns obscuros. Nossa biblioteca é organizada, tagueada e pronta para busca imediata.</p>
         </div>
-        <div class="benefit-title">Zero Modelagem</div>
-        <div class="benefit-desc">Não precisa criar nada. Baixe, fatie e imprima.</div>
-      </div>
-      <div class="benefit-item reveal d1">
-        <div class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <div class="hvn-card reveal d1">
+          <div class="hvn-icon">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="hvn-title">Zero Falhas</div>
+          <p class="hvn-desc">Arquivos testados. Eliminamos modelos corrompidos ou não-fatiáveis que desperdiçam seu filamento e sua paciência.</p>
         </div>
-        <div class="benefit-title">Qualidade Verificada</div>
-        <div class="benefit-desc">Arquivos testados e organizados por nicho de venda.</div>
-      </div>
-      <div class="benefit-item reveal d2">
-        <div class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <div class="hvn-card reveal d2">
+          <div class="hvn-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="hvn-title">Alta Lucratividade</div>
+          <p class="hvn-desc">Acervo focado em tendências de mercado. Modelos validados que vendem na Shopee, Mercado Livre e OLX.</p>
         </div>
-        <div class="benefit-title">Vendas Comprovadas</div>
-        <div class="benefit-desc">Modelos que já vendem na Shopee e Mercado Livre.</div>
-      </div>
-      <div class="benefit-item reveal d3">
-        <div class="benefit-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
-        <div class="benefit-title">Acesso Imediato</div>
-        <div class="benefit-desc">Liberado automaticamente após a confirmação.</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ CALCULADORA ══════════════ -->
-<section class="calculator">
-  <div class="container">
-    <div class="section-label reveal">CALCULE SEU RETORNO</div>
-    <h2 class="section-h2 reveal">Quanto você pode faturar?</h2>
-    <p class="section-sub reveal">Arraste o slider e veja o potencial do seu negócio.</p>
-    <div class="calc-card reveal">
-      <div>
-        <p class="calc-label">Peças vendidas por mês:</p>
-        <input type="range" id="s1" min="10" max="500" value="50" step="10">
-        <div class="calc-val-display">
-          <span class="big" id="v1">50</span><span class="unit"> peças</span>
+  <!-- CUSTO DA INAÇÃO -->
+  <section class="inaction">
+    <div class="container">
+      <div class="inaction-label reveal">A VERDADE QUE NINGUÉM FALA</div>
+      <h2 class="inaction-h2 reveal d1">Cada dia sem o STL Studio está te custando dinheiro.</h2>
+      <div class="inaction-grid">
+        <div class="inaction-card red reveal">
+          <div class="inaction-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="inaction-title">Tempo desperdiçado</div>
+          <p class="inaction-desc">Você passa horas vasculhando fóruns e grupos procurando modelos que chegam quebrados. Esse tempo poderia estar sendo usado para imprimir e vender.</p>
+          <div class="inaction-highlight">~3 horas perdidas por semana = 12h/mês</div>
         </div>
-      </div>
-      <div class="calc-slider-group">
-        <p class="calc-label">Ticket médio por peça:</p>
-        <input type="range" id="s2" min="10" max="150" value="35" step="5">
-        <div class="calc-val-display">
-          <span class="unit">R$ </span><span class="big" id="v2">35</span>
+        <div class="inaction-card amber reveal d1">
+          <div class="inaction-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <div class="inaction-title">Filamento desperdiçado</div>
+          <p class="inaction-desc">Arquivos não testados causam falhas de impressão. Cada falha consome filamento, energia e tempo.</p>
+          <div class="inaction-highlight">2-3 falhas/semana = R$ 40-80/mês desperdiçados</div>
         </div>
-      </div>
-      <div class="calc-divider"></div>
-      <p class="calc-result-label">Seu faturamento estimado:</p>
-      <span id="resultado">R$ 1.750</span>
-      <p class="calc-result-mes">/mês</p>
-      <div class="calc-context" id="contexto"></div>
-      <a href="#checkout-premium" class="btn-full">Quero começar agora →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ HOBBY vs NEGÓCIO ══════════════ -->
-<section class="hobby">
-  <div class="container">
-    <h2 class="hobby-h2 reveal">
-      A diferença entre um <span style="color:#00E5FF">Hobby</span> e um <span style="color:#7C4DFF">Negócio.</span>
-    </h2>
-    <p class="hobby-sub reveal">Profissionalize sua operação de impressão 3D eliminando os gargalos que impedem seu crescimento.</p>
-    <div class="cards-3">
-      <div class="feature-card reveal">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="inaction-card blue reveal d2">
+          <div class="inaction-icon">
+            <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="inaction-title">Vendas que seus concorrentes estão fazendo</div>
+          <p class="inaction-desc">Enquanto você procura modelos, outros makers com a biblioteca certa já estão vendendo. O STL Studio custa menos que 1 rolo de filamento.</p>
+          <div class="inaction-highlight">O STL Studio custa menos que 1 rolo de filamento</div>
         </div>
-        <div class="feature-title">Otimização de Tempo</div>
-        <div class="feature-desc">Chega de perder horas vasculhando fóruns obscuros. Nossa biblioteca é organizada, tagueada e pronta para busca imediata.</div>
-      </div>
-      <div class="feature-card reveal d1">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
-        <div class="feature-title">Zero Falhas</div>
-        <div class="feature-desc">Arquivos testados. Eliminamos modelos corrompidos ou não-fatíaveis que desperdiçam seu filamento e sua paciência.</div>
-      </div>
-      <div class="feature-card reveal d2">
-        <div class="feature-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        </div>
-        <div class="feature-title">Alta Lucratividade</div>
-        <div class="feature-desc">Acervo focado em tendências de mercado. Modelos validados que vendem na Shopee, Mercado Livre e OLX.</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ CUSTO DA INAÇÃO ══════════════ -->
-<section class="inaction">
-  <div class="container">
-    <div class="section-label red reveal">A VERDADE QUE NINGUÉM FALA</div>
-    <h2 class="inaction-h2 reveal">Cada dia sem o STL Studio está te custando dinheiro.</h2>
-    <div class="inaction-grid">
-      <div class="inaction-card red reveal">
-        <div class="inaction-icon red">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  <!-- ÂNCORA DE VALOR -->
+  <section class="anchor">
+    <div class="container">
+      <div class="anchor-label reveal">COMPARE ANTES DE DECIDIR</div>
+      <h2 class="anchor-h2 reveal d1">Por que o STL Studio é a escolha óbvia.</h2>
+      <div class="anchor-table reveal d2">
+        <div class="anchor-header">
+          <span></span>
+          <span class="alt">ALTERNATIVAS</span>
+          <span class="stl">STL STUDIO</span>
         </div>
-        <div class="inaction-title">Tempo desperdiçado</div>
-        <div class="inaction-desc">Você passa horas vasculhando fóruns e grupos procurando modelos que chegam quebrados. Esse tempo poderia estar sendo usado para imprimir e vender.</div>
-        <div class="inaction-highlight red">~3 horas perdidas por semana = 12h/mês</div>
-      </div>
-      <div class="inaction-card amber reveal d1">
-        <div class="inaction-icon amber">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div class="anchor-row">
+          <span class="row-label">Custo por modelo</span>
+          <span class="bad">R$ 5–15 (Cults3D)</span>
+          <span class="good">R$ 0,0005 por modelo</span>
         </div>
-        <div class="inaction-title">Filamento desperdiçado</div>
-        <div class="inaction-desc">Arquivos não testados causam falhas de impressão. Cada falha consome filamento, energia e tempo.</div>
-        <div class="inaction-highlight amber">2-3 falhas/semana = R$ 40-80/mês desperdiçados</div>
-      </div>
-      <div class="inaction-card blue reveal d2">
-        <div class="inaction-icon blue">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        <div class="anchor-row">
+          <span class="row-label">1 ano de acesso</span>
+          <span class="bad">R$ 520–1.560</span>
+          <span class="good">R$ 47,90 único</span>
         </div>
-        <div class="inaction-title">Vendas que seus concorrentes estão fazendo</div>
-        <div class="inaction-desc">Enquanto você procura modelos, outros makers com a biblioteca certa já estão vendendo. O STL Studio custa menos que 1 rolo de filamento.</div>
-        <div class="inaction-highlight blue">O STL Studio custa menos que 1 rolo de filamento</div>
+        <div class="anchor-row">
+          <span class="row-label">Risco de arquivo ruim</span>
+          <span class="bad">Alto — sem garantia</span>
+          <span class="good">Zero — todos testados</span>
+        </div>
+        <div class="anchor-row verdict">
+          <span class="row-label" style="font-weight:700;color:#fff;">Veredito</span>
+          <span class="bad">❌ Caro e arriscado</span>
+          <span class="good" style="font-size:0.9rem;">✓ 32x mais barato</span>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ ÂNCORA DE VALOR ══════════════ -->
-<section class="anchor">
-  <div class="container">
-    <div class="section-label reveal">COMPARE ANTES DE DECIDIR</div>
-    <h2 class="anchor-h2 reveal">Por que o STL Studio é a escolha óbvia.</h2>
-    <div class="value-table reveal">
-      <div class="value-table-header">
-        <span></span>
-        <span class="col-alt">ALTERNATIVAS</span>
-        <span class="col-stl">STL STUDIO</span>
-      </div>
-      <div class="value-row">
-        <span class="col-name">Custo por modelo</span>
-        <span class="col-bad">R$ 5–15 (Cults3D)</span>
-        <span class="col-good">R$ 0,0005 por modelo</span>
-      </div>
-      <div class="value-row">
-        <span class="col-name">1 ano de acesso</span>
-        <span class="col-bad">R$ 520–1.560</span>
-        <span class="col-good">R$ 47,90 único</span>
-      </div>
-      <div class="value-row">
-        <span class="col-name">Risco de arquivo ruim</span>
-        <span class="col-bad">Alto — sem garantia</span>
-        <span class="col-good">Zero — todos testados</span>
-      </div>
-      <div class="value-row verdict">
-        <span class="col-name" style="font-weight:700;color:#fff">Veredito</span>
-        <span class="col-bad">❌ Caro e arriscado</span>
-        <span class="col-good" style="font-weight:800">✓ 32x mais barato</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ GALERIA ══════════════ -->
-<section class="gallery">
-  <div class="container">
-    <div class="gallery-header">
-      <div>
+  <!-- GALERIA -->
+  <section class="gallery">
+    <div class="container">
+      <div class="gallery-header reveal">
         <h2 class="gallery-h2">O que você vai <span class="c-cyan">criar</span> hoje?</h2>
+        <p class="gallery-sub">Mais de 90.000 modelos organizados por nicho, prontos para impressão imediata.</p>
       </div>
-      <div class="gallery-sub">Uma curadoria dos modelos mais vendidos e impressionantes da nossa biblioteca.</div>
+      <div class="gallery-filters reveal d1">
+        <span class="gallery-pill active">Pop Culture</span>
+        <span class="gallery-pill">Home Decor</span>
+        <span class="gallery-pill">Parts</span>
+      </div>
+      <div class="gallery-grid reveal d2">
+        <div class="gallery-card big">
+          <img src="https://drive.google.com/thumbnail?id=1GOyLpvWMVEKFKeZyl5nmk82bhVWkz9XK&sz=w800" alt="Iron Man" loading="lazy" />
+          <div class="gallery-card-overlay"></div>
+          <div class="gallery-card-tag">ACTION FIGURES</div>
+          <div class="gallery-card-title">Iron Man MK50</div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://drive.google.com/thumbnail?id=1RdkLxfqsINvkrqiMxF4mspIt9Gdb45YB&sz=w800" alt="Vaso" loading="lazy" />
+          <div class="gallery-card-overlay"></div>
+          <div class="gallery-card-tag">DECORAÇÃO</div>
+          <div class="gallery-card-title">Vaso Geométrico Low Poly</div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://drive.google.com/thumbnail?id=1JJTGXj8vV0WZs4-HPST_6l0kJ1F2z10m&sz=w800" alt="Headphone" loading="lazy" />
+          <div class="gallery-card-overlay"></div>
+          <div class="gallery-card-tag">UTENSÍLIOS</div>
+          <div class="gallery-card-title">Suporte Headphone</div>
+        </div>
+        <div class="gallery-card">
+          <img src="https://drive.google.com/thumbnail?id=1kjPKowc6ajxrO7GUx-7DzyKZbWOeyCF1&sz=w800" alt="Mandaloriano" loading="lazy" />
+          <div class="gallery-card-overlay"></div>
+          <div class="gallery-card-tag">COSPLAY</div>
+          <div class="gallery-card-title">Capacete Mandaloriano</div>
+        </div>
+      </div>
     </div>
-    <div class="gallery-pills">
-      <button class="gallery-pill active" onclick="setPill(this)">Pop Culture</button>
-      <button class="gallery-pill" onclick="setPill(this)">Home Decor</button>
-      <button class="gallery-pill" onclick="setPill(this)">Parts</button>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-card big reveal">
-        <img src="https://drive.google.com/thumbnail?id=1GOyLpvWMVEKFKeZyl5nmk82bhVWkz9XK&sz=w800" alt="Iron Man MK50" loading="lazy">
-        <div class="gallery-overlay"></div>
-        <span class="gallery-tag">ACTION FIGURES</span>
-        <span class="gallery-title">Iron Man MK50</span>
-      </div>
-      <div class="gallery-card reveal d1">
-        <img src="https://drive.google.com/thumbnail?id=1RdkLxfqsINvkrqiMxF4mspIt9Gdb45YB&sz=w800" alt="Vaso Geométrico Low Poly" loading="lazy">
-        <div class="gallery-overlay"></div>
-        <span class="gallery-tag">DECORAÇÃO</span>
-        <span class="gallery-title">Vaso Geométrico Low Poly</span>
-      </div>
-      <div class="gallery-card reveal d2">
-        <img src="https://drive.google.com/thumbnail?id=1JJTGXj8vV0WZs4-HPST_6l0kJ1F2z10m&sz=w800" alt="Suporte Headphone" loading="lazy">
-        <div class="gallery-overlay"></div>
-        <span class="gallery-tag">UTENSÍLIOS</span>
-        <span class="gallery-title">Suporte Headphone</span>
-      </div>
-      <div class="gallery-card reveal d3">
-        <img src="https://drive.google.com/thumbnail?id=1kjPKowc6ajxrO7GUx-7DzyKZbWOeyCF1&sz=w800" alt="Capacete Mandaloriano" loading="lazy">
-        <div class="gallery-overlay"></div>
-        <span class="gallery-tag">COSPLAY</span>
-        <span class="gallery-title">Capacete Mandaloriano</span>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ COMPARATIVO ══════════════ -->
-<section class="compare">
-  <div class="container">
-    <div class="section-label reveal">POR QUE O STL STUDIO?</div>
-    <h2 class="compare-h2 reveal">A escolha certa fica óbvia.</h2>
-    <div class="compare-grid">
-      <div class="compare-card without reveal">
-        <div class="compare-title">SEM O STL STUDIO</div>
-        <ul class="compare-list">
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Perde horas caçando arquivos em fóruns e grupos
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Encontra modelos quebrados e incompatíveis
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Paga caro por cada modelo individual
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Fica limitado a poucos projetos e ideias
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Arrisca filamento com arquivos não testados
-          </li>
-        </ul>
-      </div>
-      <div class="compare-card with reveal d1">
-        <div class="compare-title">COM O STL STUDIO</div>
-        <ul class="compare-list">
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Acesso instantâneo a 90.000+ modelos organizados
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Arquivos testados, compatíveis e prontos para imprimir
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Pagamento único — sem mensalidades
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Material exclusivo curado por nichos de alta demanda
-          </li>
-          <li class="compare-item">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Suporte completo e acesso vitalício garantido
-          </li>
-        </ul>
+  <!-- COMPARATIVO -->
+  <section class="compare">
+    <div class="container">
+      <div class="compare-label reveal">POR QUE O STL STUDIO?</div>
+      <h2 class="compare-h2 reveal d1">A escolha certa fica óbvia.</h2>
+      <div class="compare-grid">
+        <div class="compare-card without reveal d1">
+          <div class="compare-title">SEM O STL STUDIO</div>
+          <ul class="compare-list">
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><line class="ico-x" x1="18" y1="6" x2="6" y2="18"/><line class="ico-x" x1="6" y1="6" x2="18" y2="18"/></svg>
+              Perde horas caçando arquivos em fóruns e grupos
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><line class="ico-x" x1="18" y1="6" x2="6" y2="18"/><line class="ico-x" x1="6" y1="6" x2="18" y2="18"/></svg>
+              Encontra modelos quebrados e incompatíveis
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><line class="ico-x" x1="18" y1="6" x2="6" y2="18"/><line class="ico-x" x1="6" y1="6" x2="18" y2="18"/></svg>
+              Paga caro por cada modelo individual
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><line class="ico-x" x1="18" y1="6" x2="6" y2="18"/><line class="ico-x" x1="6" y1="6" x2="18" y2="18"/></svg>
+              Fica limitado a poucos projetos e ideias
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><line class="ico-x" x1="18" y1="6" x2="6" y2="18"/><line class="ico-x" x1="6" y1="6" x2="18" y2="18"/></svg>
+              Arrisca filamento com arquivos não testados
+            </li>
+          </ul>
+        </div>
+        <div class="compare-card with reveal d2">
+          <div class="compare-title">COM O STL STUDIO</div>
+          <ul class="compare-list">
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><polyline class="ico-check" points="20 6 9 17 4 12"/></svg>
+              Acesso instantâneo a 90.000+ modelos organizados
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><polyline class="ico-check" points="20 6 9 17 4 12"/></svg>
+              Arquivos testados, compatíveis e prontos para imprimir
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><polyline class="ico-check" points="20 6 9 17 4 12"/></svg>
+              Pagamento único — sem mensalidades
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><polyline class="ico-check" points="20 6 9 17 4 12"/></svg>
+              Material exclusivo curado por nichos de alta demanda
+            </li>
+            <li class="compare-item">
+              <svg class="ico" viewBox="0 0 24 24"><polyline class="ico-check" points="20 6 9 17 4 12"/></svg>
+              Suporte completo e acesso vitalício garantido
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ BÔNUS EXCLUSIVOS ══════════════ -->
-<section class="bonuses">
-  <div class="container">
-    <div class="section-label reveal">EXPANSION PACKS</div>
-    <h2 class="bonuses-h2 reveal">Bônus Exclusivos</h2>
-    <p class="bonuses-sub reveal">Incluído gratuitamente no seu acesso Premium Vitalício.</p>
-    <div class="bonuses-grid">
-      <div class="bonus-card reveal">
-        <div class="bonus-card-placeholder"></div>
-        <div class="bonus-card-overlay"></div>
-        <div class="bonus-card-content">
-          <div class="bonus-icon" style="background:rgba(249,115,22,0.2);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  <!-- BÔNUS -->
+  <section class="bonuses">
+    <div class="container">
+      <div class="bonuses-label reveal">EXPANSION PACKS</div>
+      <h2 class="bonuses-h2 reveal d1">Bônus Exclusivos</h2>
+      <p class="bonuses-sub reveal d2">Incluído gratuitamente no seu acesso Premium Vitalício.</p>
+      <div class="bonuses-grid">
+        <div class="bonus-card reveal">
+          <div style="position:absolute;inset:0;background:#1A1A1A;"></div>
+          <div class="bonus-bg"></div>
+          <div class="bonus-content">
+            <div class="bonus-icon" style="background:rgba(249,115,22,0.2);">
+              <svg viewBox="0 0 24 24" style="stroke:#f97316;"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
+            </div>
+            <div class="bonus-category">PREMIUM COLLECTIBLES</div>
+            <div class="bonus-title">Pack Marvel &amp; DC</div>
           </div>
-          <div class="bonus-label">PREMIUM COLLECTIBLES</div>
-          <div class="bonus-title">Pack Marvel &amp; DC</div>
         </div>
-      </div>
-      <div class="bonus-card reveal d1">
-        <div class="bonus-card-placeholder"></div>
-        <div class="bonus-card-overlay"></div>
-        <div class="bonus-card-content">
-          <div class="bonus-icon" style="background:rgba(59,130,246,0.2);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        <div class="bonus-card reveal d1">
+          <div style="position:absolute;inset:0;background:#1A1A1A;"></div>
+          <div class="bonus-bg"></div>
+          <div class="bonus-content">
+            <div class="bonus-icon" style="background:rgba(59,130,246,0.2);">
+              <svg viewBox="0 0 24 24" style="stroke:#3b82f6;"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+            </div>
+            <div class="bonus-category">HOME SOLUTIONS</div>
+            <div class="bonus-title">Pack Utilitários</div>
+            <div class="bonus-desc">Peças para casa e escritório que seus clientes já procuram.</div>
           </div>
-          <div class="bonus-label">HOME SOLUTIONS</div>
-          <div class="bonus-title">Pack Utilitários</div>
-          <div class="bonus-desc">Peças para casa e escritório que seus clientes já procuram.</div>
         </div>
-      </div>
-      <div class="bonus-card reveal d2">
-        <img class="bonus-card-bg" src="https://drive.google.com/thumbnail?id=1BUJqcnpo-XVeWmW0eS5-fUH_ytDq2MOz&sz=w800" alt="Pack Articulados" loading="lazy">
-        <div class="bonus-card-overlay"></div>
-        <div class="bonus-card-content">
-          <div class="bonus-icon" style="background:rgba(124,77,255,0.2);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7C4DFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <div class="bonus-card reveal d2">
+          <img src="https://drive.google.com/thumbnail?id=1BUJqcnpo-XVeWmW0eS5-fUH_ytDq2MOz&sz=w800" alt="Articulados" loading="lazy" />
+          <div class="bonus-bg"></div>
+          <div class="bonus-content">
+            <div class="bonus-icon" style="background:rgba(124,77,255,0.2);">
+              <svg viewBox="0 0 24 24" style="stroke:#7C4DFF;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="bonus-category">ARTICULATED</div>
+            <div class="bonus-title">Pack Articulados</div>
           </div>
-          <div class="bonus-label">ARTICULATED</div>
-          <div class="bonus-title">Pack Articulados</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ DEPOIMENTOS + CONTADOR ══════════════ -->
-<section class="testimonials">
-  <div class="container">
-    <h2 class="testimonials-h2 reveal">Quem imprime, <span class="c-purple">aprova.</span></h2>
-    <div class="counter-bar reveal">
-      <div class="pulse-dot"></div>
-      <span class="counter-text"><strong><span id="counter">3.649</span></strong> makers já acessam o STL Studio</span>
+  <!-- DEPOIMENTOS -->
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="testimonials-h2 reveal">Quem imprime, <span class="c-purple">aprova.</span></h2>
+      <div class="live-counter reveal d1">
+        <div class="live-dot"></div>
+        <span class="live-text"><span id="counter">3.649</span> makers já acessam o STL Studio</span>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-quote">"</span>
+          <p class="testi-text">A qualidade dos arquivos mudou o patamar da minha loja na Shopee. Antes eu tinha muitas reclamações de peças frágeis, agora só recebo 5 estrelas.</p>
+          <div class="testi-divider"></div>
+          <div class="testi-author">
+            <div class="testi-avatar">CM</div>
+            <div>
+              <div class="testi-name">Carlos Mendes</div>
+              <div class="testi-role">Maker Profissional</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal d1">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-quote">"</span>
+          <p class="testi-text">O pack da Marvel é insano. A armadura do Homem de Ferro saiu perfeita na minha Ender 3, sem precisar ficar cortando o arquivo manualmente.</p>
+          <div class="testi-divider"></div>
+          <div class="testi-author">
+            <div class="testi-avatar">FL</div>
+            <div>
+              <div class="testi-name">Fernanda Lima</div>
+              <div class="testi-role">Cosplayer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal d2">
+          <div class="testi-stars">★★★★★</div>
+          <span class="testi-quote">"</span>
+          <p class="testi-text">Pelo preço, eu achei que seria aqueles packs bagunçados do Google Drive. Mas a organização é impecável. Valeu cada centavo.</p>
+          <div class="testi-divider"></div>
+          <div class="testi-author">
+            <div class="testi-avatar">RS</div>
+            <div>
+              <div class="testi-name">Ricardo S.</div>
+              <div class="testi-role">Hobbyist</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card reveal">
-        <div class="testimonial-stars">★★★★★</div>
-        <span class="testimonial-quote">"</span>
-        <p class="testimonial-text">A qualidade dos arquivos mudou o patamar da minha loja na Shopee. Antes eu tinha muitas reclamações de peças frágeis, agora só recebo 5 estrelas.</p>
-        <div class="testimonial-divider"></div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">CM</div>
-          <div>
-            <div class="testimonial-name">Carlos Mendes</div>
-            <div class="testimonial-role">Maker Profissional</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card reveal d1">
-        <div class="testimonial-stars">★★★★★</div>
-        <span class="testimonial-quote">"</span>
-        <p class="testimonial-text">O pack da Marvel é insano. A armadura do Homem de Ferro saiu perfeita na minha Ender 3, sem precisar ficar cortando o arquivo manualmente.</p>
-        <div class="testimonial-divider"></div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">FL</div>
-          <div>
-            <div class="testimonial-name">Fernanda Lima</div>
-            <div class="testimonial-role">Cosplayer</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card reveal d2">
-        <div class="testimonial-stars">★★★★★</div>
-        <span class="testimonial-quote">"</span>
-        <p class="testimonial-text">Pelo preço, eu achei que seria aqueles packs bagunçados do Google Drive. Mas a organização é impecável. Valeu cada centavo.</p>
-        <div class="testimonial-divider"></div>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">RS</div>
-          <div>
-            <div class="testimonial-name">Ricardo S.</div>
-            <div class="testimonial-role">Hobbyist</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ PRICING ══════════════ -->
-<section class="pricing" id="checkout-premium">
-  <div class="container">
-    <div class="section-label reveal">INVESTIMENTO</div>
-    <h2 class="pricing-h2 reveal">Acesso Vitalício por um Único Pagamento</h2>
-    <p class="pricing-sub reveal">Sem mensalidade. Sem renovação. Você paga uma vez e usa para sempre.</p>
-    <div class="pricing-urgency reveal">
-      <span class="urgency-pill">⚠ Preço de lançamento — sujeito a reajuste</span>
-    </div>
-    <div class="pricing-grid">
-      <!-- BÁSICO -->
-      <div class="plan-card basic reveal" id="checkout-basico">
-        <div class="plan-name">PACOTE BÁSICO</div>
-        <div class="plan-original">De R$ 189,90</div>
-        <p class="plan-price-label">Por apenas</p>
-        <div class="plan-price">R$ 27,90</div>
-        <p class="plan-desc" style="margin-top:6px;">Para quem está começando e quer testar a qualidade.</p>
-        <div class="plan-divider"></div>
-        <ul class="plan-list">
-          <li class="plan-list-item basic-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Pack com +50.000 arquivos STL
-          </li>
-          <li class="plan-list-item basic-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Acesso vitalício
-          </li>
-          <li class="plan-list-item basic-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 1: Pack de Veículos 3D Profissionais
-          </li>
-          <li class="plan-list-item basic-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 2: Coleção Heróis da Marvel
-          </li>
-        </ul>
-        <a href="#checkout-basico" class="btn-plan-outline">Comprar Pacote Básico</a>
+  <!-- PRICING -->
+  <section class="pricing" id="checkout-basico">
+    <div class="container">
+      <div class="pricing-label reveal">INVESTIMENTO</div>
+      <h2 class="pricing-h2 reveal d1">Acesso Vitalício por um Único Pagamento</h2>
+      <p class="pricing-sub reveal d2">Sem mensalidade. Sem renovação. Você paga uma vez e usa para sempre.</p>
+      <div class="pricing-urgency reveal d2">
+        <span class="pricing-badge-pill">⚠ Preço de lançamento — sujeito a reajuste</span>
       </div>
-      <!-- PREMIUM -->
-      <div class="plan-card premium reveal d1">
-        <div class="plan-badge">✦ MELHOR CUSTO-BENEFÍCIO ✦</div>
-        <div class="plan-name premium">STL STUDIO PREMIUM</div>
-        <div style="margin-top:6px;">
-          <span class="plan-stars">★★★★★</span>
-          <span class="plan-stars-count">4,98 · 3.649 avaliações</span>
+      <div class="pricing-grid">
+        <div class="pricing-card basic reveal d1">
+          <div class="plan-name">PACOTE BÁSICO</div>
+          <div class="plan-old">De R$ 189,90</div>
+          <div class="plan-by">Por apenas</div>
+          <div class="plan-price">R$ 27,90</div>
+          <p class="plan-desc" style="margin-top:8px;">Para quem está começando e quer testar a qualidade.</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Pack com +50.000 arquivos STL
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Acesso vitalício
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 1: Pack de Veículos 3D Profissionais
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 2: Coleção Heróis da Marvel
+            </li>
+          </ul>
+          <a href="#checkout-basico" class="plan-btn outline">Comprar Pacote Básico</a>
         </div>
-        <div class="plan-original">De R$ 359,90</div>
-        <div class="plan-price-box">
-          <p class="plan-price-label">Por apenas</p>
-          <div class="plan-price premium" style="font-size:3.4rem;line-height:1;">R$ 47,90</div>
+        <div class="pricing-card premium reveal d2" id="checkout-premium">
+          <div class="premium-badge">✦ MELHOR CUSTO-BENEFÍCIO ✦</div>
+          <div class="plan-name white">STL STUDIO PREMIUM</div>
+          <div class="plan-rating">★★★★★ <span style="font-size:12px;">4,98 · 3.649 avaliações</span></div>
+          <div class="plan-old">De R$ 359,90</div>
+          <div class="plan-price-box">
+            <div class="plan-by">Por apenas</div>
+            <div class="plan-price cyan">R$ 47,90</div>
+          </div>
+          <ul class="plan-features">
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Pack com +90.000 arquivos STL
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Acesso vitalício
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 1: Pack de Veículos 3D Profissionais
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 2: Coleção Heróis da Marvel
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 3: Pack de Chaveiros Personalizados
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 4: Ferramentas 3D Úteis e Inovadoras
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 5: Modelos Flexíveis e Articulados
+            </li>
+            <li class="plan-feature">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Bônus 6: Coleção Clássicos dos Desenhos
+            </li>
+          </ul>
+          <div class="plan-special">🎁 BÔNUS ESPECIAL: Coleção 3D de Natal</div>
+          <a href="#checkout-premium" class="plan-btn gradient">QUERO O STL STUDIO AGORA →</a>
+          <p class="plan-secure">🔒 Compra 100% Segura e Instantânea</p>
         </div>
-        <ul class="plan-list">
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Pack com +90.000 arquivos STL
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Acesso vitalício
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 1: Pack de Veículos 3D Profissionais
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 2: Coleção Heróis da Marvel
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 3: Pack de Chaveiros Personalizados
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 4: Ferramentas 3D Úteis e Inovadoras
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 5: Modelos Flexíveis e Articulados
-          </li>
-          <li class="plan-list-item premium-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Bônus 6: Coleção Clássicos dos Desenhos
-          </li>
-        </ul>
-        <div class="plan-special">🎁 BÔNUS ESPECIAL: Coleção 3D de Natal</div>
-        <a href="#checkout-premium" class="btn-plan-primary">QUERO O STL STUDIO AGORA →</a>
-        <p class="plan-secure">🔒 Compra 100% Segura e Instantânea</p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════ GARANTIA ══════════════ -->
-<section class="guarantee">
-  <div class="container">
-    <div class="guarantee-card reveal">
-      <div class="guarantee-icon">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+  <!-- GARANTIA -->
+  <section class="guarantee">
+    <div class="container">
+      <div class="guarantee-card reveal">
+        <div class="guarantee-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <h3 class="guarantee-h3">Garantia Incondicional de 7 Dias</h3>
+          <p class="guarantee-sub">Você não tem nada a perder. Literalmente.</p>
+          <p class="guarantee-text">Temos tanta confiança na qualidade da nossa biblioteca que assumimos todo o risco. Se por qualquer motivo você não gostar — da organização, dos modelos, de qualquer coisa — devolvemos 100% do seu dinheiro em até 7 dias.</p>
+          <div class="guarantee-box">O único risco real é não testar e continuar perdendo tempo e filamento como antes.</div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <div class="faq-icon-wrap reveal">?</div>
+      <h2 class="faq-h2 reveal d1">Dúvidas Frequentes</h2>
+      <p class="faq-sub reveal d2">Tudo o que você precisa saber antes de começar.</p>
+      <div class="faq-list">
+        <div class="faq-item reveal">
+          <div class="faq-header">
+            <span class="faq-question">Esses arquivos funcionam na minha impressora 3D?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-body">
+            <div class="faq-body-inner">Sim! O formato STL é universal — compatível com Bambu Lab, Creality, Anycubic, Elegoo e todas as outras.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal d1">
+          <div class="faq-header">
+            <span class="faq-question">Como eu acesso os arquivos depois de pagar?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-body">
+            <div class="faq-body-inner">O acesso é enviado automaticamente para seu e-mail após a confirmação do pagamento.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal d2">
+          <div class="faq-header">
+            <span class="faq-question">Preciso saber modelar em 3D pra usar?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-body">
+            <div class="faq-body-inner">Não! Se você sabe usar um computador, sabe usar o STL Studio. Baixe, abra no fatiador e mande imprimir.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal d3">
+          <div class="faq-header">
+            <span class="faq-question">Posso vender as peças que eu imprimir?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-body">
+            <div class="faq-body-inner">Sim, você pode vender as peças físicas à vontade. A revenda dos arquivos digitais não é permitida.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal">
+          <div class="faq-header">
+            <span class="faq-question">Funciona pra quem está começando agora?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-body">
+            <div class="faq-body-inner">Com certeza. Nossa biblioteca é acessível mesmo para quem nunca imprimiu antes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="container">
+      <p class="cta-final-pre reveal">Ainda está na dúvida?</p>
+      <h2 class="cta-final-h2 reveal d1">Seu próximo passo começa aqui.</h2>
+      <p class="cta-final-sub reveal d2">Mais de 90.000 arquivos prontos para você baixar agora.</p>
+      <a href="#checkout-premium" class="cta-final-btn reveal d2">QUERO ACESSAR O STL STUDIO AGORA →</a>
+      <p class="cta-final-micro reveal d3">Acesso imediato · Garantia de 7 dias · Pagamento único</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
       <div>
-        <h3 class="guarantee-h3">Garantia Incondicional de 7 Dias</h3>
-        <p class="guarantee-strong">Você não tem nada a perder. Literalmente.</p>
-        <p class="guarantee-text">Temos tanta confiança na qualidade da nossa biblioteca que assumimos todo o risco. Se por qualquer motivo você não gostar — da organização, dos modelos, de qualquer coisa — devolvemos 100% do seu dinheiro em até 7 dias.</p>
-        <div class="guarantee-box">O único risco real é não testar e continuar perdendo tempo e filamento como antes.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ FAQ ══════════════ -->
-<section class="faq">
-  <div class="container">
-    <div class="faq-icon-wrap reveal">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    </div>
-    <h2 class="faq-h2 reveal">Dúvidas Frequentes</h2>
-    <p class="faq-sub reveal">Tudo o que você precisa saber antes de começar.</p>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-header" onclick="toggleFaq(this)">
-          <span class="faq-question">Esses arquivos funcionam na minha impressora 3D?</span>
-          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div class="faq-body">
-          <div class="faq-body-inner">
-            <p class="faq-answer">Sim! O formato STL é universal — compatível com Bambu Lab, Creality, Anycubic, Elegoo e todas as outras.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-header" onclick="toggleFaq(this)">
-          <span class="faq-question">Como eu acesso os arquivos depois de pagar?</span>
-          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div class="faq-body">
-          <div class="faq-body-inner">
-            <p class="faq-answer">O acesso é enviado automaticamente para seu e-mail após a confirmação do pagamento.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-header" onclick="toggleFaq(this)">
-          <span class="faq-question">Preciso saber modelar em 3D pra usar?</span>
-          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div class="faq-body">
-          <div class="faq-body-inner">
-            <p class="faq-answer">Não! Se você sabe usar um computador, sabe usar o STL Studio. Baixe, abra no fatiador e mande imprimir.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-header" onclick="toggleFaq(this)">
-          <span class="faq-question">Posso vender as peças que eu imprimir?</span>
-          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div class="faq-body">
-          <div class="faq-body-inner">
-            <p class="faq-answer">Sim, você pode vender as peças físicas à vontade. A revenda dos arquivos digitais não é permitida.</p>
-          </div>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-header" onclick="toggleFaq(this)">
-          <span class="faq-question">Funciona pra quem está começando agora?</span>
-          <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div class="faq-body">
-          <div class="faq-body-inner">
-            <p class="faq-answer">Com certeza. Nossa biblioteca é acessível mesmo para quem nunca imprimiu antes.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════ CTA FINAL ══════════════ -->
-<section class="cta-final">
-  <div class="container">
-    <p class="cta-final-context reveal">Ainda está na dúvida?</p>
-    <h2 class="cta-final-h2 reveal">Seu próximo passo começa aqui.</h2>
-    <p class="cta-final-sub reveal">Mais de 90.000 arquivos prontos para você baixar agora.</p>
-    <a href="#checkout-premium" class="btn-cta-xl reveal">QUERO ACESSAR O STL STUDIO AGORA →</a>
-    <p class="cta-final-micro reveal">Acesso imediato · Garantia de 7 dias · Pagamento único</p>
-  </div>
-</section>
-
-<!-- ══════════════ FOOTER ══════════════ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-logo"><span class="stl">STL</span><span class="studio">STUDIO</span></div>
+        <div class="footer-logo"><span>STL</span><span>STUDIO</span></div>
         <div class="footer-copy">© 2024. Todos os direitos reservados.</div>
       </div>
       <div class="footer-brands">CREALITY · ELEGOO · ANYCUBIC</div>
@@ -1986,87 +1391,85 @@
         <a href="#">Suporte</a>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<script>
-/* 1. NAVBAR SCROLL */
-var navbar = document.getElementById('navbar');
-window.addEventListener('scroll', function(){
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+  <script>
+    // === NAVBAR SCROLL ===
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
 
-/* 2. INTERSECTION OBSERVER */
-var revealObserver = new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(entry.isIntersecting){
-      entry.target.classList.add('active');
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+    // === REVEAL ON SCROLL ===
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
 
-/* 3. FAQ ACCORDION */
-function toggleFaq(header){
-  var item = header.parentElement;
-  var body = item.querySelector('.faq-body');
-  var isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(function(i){
-    i.classList.remove('open');
-    i.querySelector('.faq-body').style.maxHeight = '0';
-  });
-  if(!isOpen){
-    item.classList.add('open');
-    body.style.maxHeight = body.scrollHeight + 'px';
-  }
-}
+    // === FAQ ACCORDION ===
+    document.querySelectorAll('.faq-item').forEach(function(item) {
+      item.querySelector('.faq-header').addEventListener('click', function() {
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(function(i) {
+          i.classList.remove('open');
+          i.querySelector('.faq-body').style.maxHeight = '0';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          var body = item.querySelector('.faq-body');
+          body.style.maxHeight = body.scrollHeight + 'px';
+        }
+      });
+    });
 
-/* 4. GALLERY PILLS */
-function setPill(btn){
-  document.querySelectorAll('.gallery-pill').forEach(function(p){ p.classList.remove('active'); });
-  btn.classList.add('active');
-}
+    // === GALLERY PILLS ===
+    var pills = document.querySelectorAll('.gallery-pill');
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        pills.forEach(function(p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+      });
+    });
 
-/* 5. CALCULADORA */
-var s1=document.getElementById('s1'), s2=document.getElementById('s2');
-var v1=document.getElementById('v1'), v2=document.getElementById('v2');
-var res=document.getElementById('resultado'), ctx=document.getElementById('contexto');
-function calcular(){
-  var pecas=parseInt(s1.value), ticket=parseInt(s2.value);
-  var fat=pecas*ticket;
-  v1.textContent=pecas; v2.textContent=ticket;
-  res.textContent='R$ '+fat.toLocaleString('pt-BR');
-  var rec=Math.ceil(47.90/ticket);
-  ctx.textContent='Para isso, o STL Studio custa apenas R$ 47,90 — pagamento único. Você recupera o investimento vendendo apenas '+rec+' peças.';
-}
-s1.addEventListener('input',calcular);
-s2.addEventListener('input',calcular);
-calcular();
-
-/* 6. CONTADOR */
-var count = 3649;
-var counterEl = document.getElementById('counter');
-counterEl.textContent = count.toLocaleString('pt-BR');
-setInterval(function(){ count++; counterEl.textContent = count.toLocaleString('pt-BR'); }, 23000);
-
-/* 7. FOMO POPUP */
-var fomoEl = document.getElementById('fomo');
-var fomoNameEl = document.getElementById('fomo-name');
-var fomoPlanEl = document.querySelector('.fomo-product');
-var fomoNames = ["Lucas Oliveira","Mariana Costa","Felipe Souza","Ana Paula","Rafael Lima"];
-var fomoPlans = ["Pacote Premium","Pacote Premium","Pacote Básico","Pacote Premium","Pacote Premium"];
-var fomoIdx = 0;
-fomoEl.style.opacity = '1';
-setInterval(function(){
-  fomoEl.style.opacity = '0';
-  setTimeout(function(){
-    fomoIdx = (fomoIdx+1) % fomoNames.length;
-    fomoNameEl.textContent = fomoNames[fomoIdx] + ' acabou de comprar!';
-    fomoPlanEl.textContent = 'Comprou o ' + fomoPlans[fomoIdx];
+    // === FOMO ===
+    var fomoEl = document.getElementById('fomo');
+    var fomoNameEl = document.getElementById('fomo-name');
+    var fomoPlanEl = document.querySelector('.fomo-product');
+    var fomoNames = ["Lucas Oliveira","Mariana Costa","Felipe Souza","Ana Paula","Rafael Lima"];
+    var fomoPlans = ["Pacote Premium","Pacote Premium","Pacote Básico","Pacote Premium","Pacote Premium"];
+    var fomoIdx = 0;
     fomoEl.style.opacity = '1';
-  }, 500);
-}, 8000);
-</script>
+    setInterval(function(){
+      fomoEl.style.opacity = '0';
+      setTimeout(function(){
+        fomoIdx = (fomoIdx+1) % fomoNames.length;
+        fomoNameEl.textContent = fomoNames[fomoIdx] + ' acabou de comprar!';
+        fomoPlanEl.textContent = 'Comprou o ' + fomoPlans[fomoIdx];
+        fomoEl.style.opacity = '1';
+      }, 500);
+    }, 8000);
+
+    // === CALCULADORA ===
+    var s1=document.getElementById('s1'), s2=document.getElementById('s2');
+    var v1=document.getElementById('v1'), v2=document.getElementById('v2');
+    var res=document.getElementById('resultado'), ctx=document.getElementById('contexto');
+    function calcular(){
+      var pecas=parseInt(s1.value), ticket=parseInt(s2.value);
+      var fat=pecas*ticket;
+      v1.textContent=pecas; v2.textContent=ticket;
+      res.textContent='R$ '+fat.toLocaleString('pt-BR');
+      var rec=Math.ceil(47.90/ticket);
+      ctx.textContent='Para isso, o STL Studio custa apenas R$ 47,90 — pagamento único. Você recupera o investimento vendendo apenas '+rec+' peças.';
+    }
+    s1.addEventListener('input',calcular);
+    s2.addEventListener('input',calcular);
+    calcular();
+
+    // === CONTADOR AO VIVO ===
+    var count = 3649;
+    var counterEl = document.getElementById('counter');
+    counterEl.textContent = count.toLocaleString('pt-BR');
+    setInterval(function(){ count++; counterEl.textContent = count.toLocaleString('pt-BR'); }, 23000);
+  </script>
 </body>
 </html>
