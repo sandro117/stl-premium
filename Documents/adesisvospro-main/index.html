@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pack de Adesivos Pro — 1.500 Adesivos Prontos pra Sua Moto</title>
+  <meta name="description" content="1.500 adesivos prontos pra moto, carro ou capacete. Sem máquina de corte, sem CorelDRAW. Baixou, mandou pra gráfica e colou. Por apenas R$19.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green: #00e64d;
+      --red: #ff3333;
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #0d0d0d;
+      --text: #ffffff;
+      --muted: #cccccc;
+      --border: 1px solid #00e64d;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      padding-top: 42px; /* urgency bar offset */
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3 { line-height: 1.15; }
+
+    /* ===== LAYOUT ===== */
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .section { padding: 64px 0; }
+
+    .section-title {
+      font-size: clamp(20px, 5.5vw, 38px);
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      line-height: 1.2;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #00e64d55, transparent);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== CTA BUTTON ===== */
+    .btn-cta {
+      display: block;
+      width: 100%;
+      background: var(--green);
+      color: #000;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 18px 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0,230,77,0.4);
+      animation: ctaPulse 2.2s ease-in-out infinite;
+      transition: filter 0.2s, transform 0.2s;
+    }
+    .btn-cta:hover { filter: brightness(1.12); transform: scale(1.02); animation: none; }
+
+    @keyframes ctaPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,230,77,0.4); }
+      50%       { box-shadow: 0 0 40px rgba(0,230,77,0.75); }
+    }
+
+    .cta-wrap { max-width: 500px; margin: 0 auto; }
+
+    .microtext {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 9px;
+    }
+
+    /* ========================================
+       [1] URGENCY BAR
+    ======================================== */
+    #urgency-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #cc0000;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      padding: 11px 16px;
+      z-index: 1100;
+      letter-spacing: 0.3px;
+    }
+
+    /* ========================================
+       [2] HERO
+    ======================================== */
+    #hero {
+      background: linear-gradient(180deg, #111 0%, var(--bg) 100%);
+      padding: 52px 0 68px;
+      text-align: center;
+    }
+    #hero h1 {
+      font-size: clamp(26px, 6.5vw, 54px);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      color: #fff;
+    }
+    #hero h1 em { color: var(--green); font-style: normal; }
+
+    .hero-video-wrap {
+      position: relative;
+      margin: 0 auto 28px;
+      max-width: 700px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--green);
+    }
+    .hero-video-wrap video { width: 100%; display: block; }
+
+    .hero-subtitle {
+      font-size: clamp(14px, 3.2vw, 19px);
+      color: var(--muted);
+      margin: 0 auto 28px;
+      max-width: 620px;
+      line-height: 1.65;
+    }
+
+    .hero-price { margin-bottom: 28px; }
+    .price-old {
+      font-size: 18px;
+      color: var(--red);
+      text-decoration: line-through;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .price-label { font-size: 14px; color: var(--muted); display: block; margin-bottom: 4px; }
+    .price-big {
+      font-size: clamp(48px, 12vw, 80px);
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+    }
+    .price-cents { font-size: 0.45em; vertical-align: super; }
+
+    /* ========================================
+       [3] É PARA VOCÊ QUE
+    ======================================== */
+    #para-voce { padding: 64px 0; background: var(--bg); }
+
+    .mockup-img {
+      display: block;
+      max-width: 280px;
+      width: 100%;
+      margin: 0 auto 36px;
+      border-radius: 12px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .feature-list li {
+      background: var(--bg2);
+      border-radius: 12px;
+      padding: 15px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .feature-list li.neg { border: 1px solid rgba(255,51,51,0.25); }
+    .feature-list li.pos { border: 1px solid rgba(0,230,77,0.25); }
+
+    .ico-x  { color: var(--red);   font-size: 19px; font-weight: 900; flex-shrink: 0; }
+    .ico-ok { color: var(--green); font-size: 19px; font-weight: 900; flex-shrink: 0; }
+
+    /* ========================================
+       [4] COM O PACK VOCÊ GANHA
+    ======================================== */
+    #voce-ganha { padding: 64px 0; background: var(--bg3); }
+
+    /* ========================================
+       [5] BÔNUS
+    ======================================== */
+    #bonus { padding: 64px 0; background: var(--bg); }
+
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .bonus-card {
+      background: var(--bg2);
+      border: 1px solid var(--green);
+      border-radius: 12px;
+      padding: 20px 16px 16px;
+      position: relative;
+      text-align: center;
+    }
+    .bonus-badge {
+      position: absolute;
+      top: -1px; left: -1px;
+      background: var(--green);
+      color: #000;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 4px 10px;
+      border-radius: 11px 0 11px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .bonus-card img {
+      display: block;
+      width: 100%;
+      max-width: 150px;
+      height: 110px;
+      object-fit: contain;
+      margin: 18px auto 14px;
+    }
+    .bonus-card h3 {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      letter-spacing: 0.4px;
+    }
+    .bonus-card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ========================================
+       [6] DEPOIMENTOS
+    ======================================== */
+    #depoimentos { padding: 64px 0; background: var(--bg3); }
+
+    .testimonial-videos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      max-width: 680px;
+      margin: 0 auto 48px;
+    }
+
+    .vid-thumb {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0,230,77,0.35);
+      cursor: pointer;
+      background: #000;
+      aspect-ratio: 9/16;
+    }
+    .vid-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: opacity 0.3s;
+    }
+    .vid-thumb:hover img { opacity: 0.85; }
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .play-circle {
+      width: 62px; height: 62px;
+      background: rgba(0,230,77,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #000;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.5);
+    }
+    .vid-thumb video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      border-radius: 12px;
+    }
+    .vid-thumb.playing img,
+    .vid-thumb.playing .play-overlay { display: none; }
+    .vid-thumb.playing video { display: block; }
+
+    /* Carousel */
+    .carousel-outer {
+      max-width: 340px;
+      margin: 0 auto;
+      user-select: none;
+    }
+    .carousel-viewport {
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(0,230,77,0.2);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.42s cubic-bezier(.4,0,.2,1);
+    }
+    .carousel-track img {
+      min-width: 100%;
+      width: 100%;
+      display: block;
+      object-fit: contain;
+      background: #111;
+      max-height: 480px;
+    }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #333;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .carousel-dot.active {
+      background: var(--green);
+      transform: scale(1.25);
+    }
+
+    /* ========================================
+       [7] PREÇOS
+    ======================================== */
+    #compra { padding: 64px 0; background: var(--bg); }
+
+    .scarcity {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--red);
+      margin-bottom: 36px;
+      animation: scarBlink 1.6s ease-in-out infinite;
+    }
+    @keyframes scarBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    @media (min-width: 620px) {
+      .plans-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+    }
+
+    .plan-card {
+      background: var(--bg2);
+      border: 1px solid var(--green);
+      border-radius: 12px;
+      padding: 28px 22px;
+      position: relative;
+      text-align: center;
+      overflow: visible;
+    }
+    .plan-card.featured {
+      border-width: 2px;
+      margin-top: 18px; /* space for badge */
+    }
+
+    .plan-most-sold {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: #000;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 6px 22px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    .plan-name {
+      font-size: 17px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 18px;
+    }
+
+    .plan-mock {
+      display: block;
+      max-width: 180px;
+      width: 100%;
+      margin: 0 auto 18px;
+      border-radius: 8px;
+    }
+
+    .plan-items {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 22px;
+    }
+    .plan-items li {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: var(--muted);
+      padding: 7px 0;
+      border-bottom: 1px solid #1c1c1c;
+      line-height: 1.4;
+    }
+    .plan-items li:last-child { border-bottom: none; }
+    .plan-items .c { color: var(--green); font-weight: 900; flex-shrink: 0; }
+
+    .plan-from {
+      font-size: 15px;
+      color: var(--red);
+      text-decoration: line-through;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .plan-for-label {
+      font-size: 13px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .plan-price {
+      font-size: clamp(46px, 11vw, 68px);
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+      display: block;
+      margin-bottom: 22px;
+    }
+    .plan-price sup { font-size: 0.42em; vertical-align: super; }
+    .plan-price sub { font-size: 0.42em; vertical-align: baseline; }
+
+    .seal {
+      display: block;
+      max-width: 240px;
+      width: 100%;
+      margin: 14px auto 0;
+      opacity: 0.92;
+    }
+
+    /* ========================================
+       [8] COMO VOCÊ VAI RECEBER
+    ======================================== */
+    #como-receber { padding: 64px 0; background: var(--bg3); }
+
+    .receive-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 820px;
+      margin: 0 auto 28px;
+    }
+    @media (max-width: 640px) {
+      .receive-grid { grid-template-columns: 1fr; max-width: 400px; }
+    }
+    .receive-card {
+      background: var(--bg2);
+      border: 1px solid rgba(0,230,77,0.3);
+      border-radius: 12px;
+      padding: 26px 18px;
+      text-align: center;
+    }
+    .receive-card .icon { font-size: 38px; display: block; margin-bottom: 12px; }
+    .receive-card h3 {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--green);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .receive-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .receive-note {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+
+    /* ========================================
+       [9] FAQ
+    ======================================== */
+    #faq { padding: 64px 0; background: var(--bg); }
+
+    .faq-list {
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+    .faq-item {
+      border: 1px solid #222;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      background: var(--bg2);
+      color: #fff;
+      gap: 12px;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: #161616; }
+    .faq-arrow {
+      color: var(--green);
+      font-size: 16px;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(90deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.38s ease, padding 0.25s ease;
+      background: var(--bg3);
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.72;
+      padding: 0 20px;
+    }
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding: 16px 20px;
+    }
+
+    /* ========================================
+       [10] PIRATARIA
+    ======================================== */
+    #pirataria {
+      padding: 64px 0 48px;
+      background: var(--bg3);
+      text-align: center;
+      border-top: 1px solid #1a1a1a;
+    }
+    #pirataria h2 {
+      font-size: clamp(22px, 5.5vw, 38px);
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    #pirataria h2 .crime { color: var(--red); }
+    #pirataria p {
+      max-width: 600px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.72;
+    }
+    #pirataria img {
+      max-width: 180px;
+      border-radius: 8px;
+      opacity: 0.88;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* ========================================
+       SOCIAL PROOF POPUP
+    ======================================== */
+    #sp-popup {
+      position: fixed;
+      bottom: 80px;
+      left: 18px;
+      background: #fff;
+      color: #000;
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 12px 16px;
+      max-width: 285px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+      z-index: 1050;
+      transform: translateX(calc(-100% - 30px));
+      transition: transform 0.42s cubic-bezier(.4,0,.2,1);
+      pointer-events: none;
+    }
+    #sp-popup.show { transform: translateX(0); }
+    .sp-row { display: flex; align-items: center; gap: 10px; }
+    .sp-emoji { font-size: 22px; }
+    .sp-msg { font-size: 12px; font-weight: 700; color: #000; line-height: 1.4; }
+    .sp-name { color: #009933; }
+    .sp-ago { font-size: 11px; color: #666; margin-top: 3px; }
+
+    /* ========================================
+       STICKY CTA (mobile only)
+    ======================================== */
+    #sticky-cta {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--green);
+      padding: 15px 20px;
+      text-align: center;
+      z-index: 1040;
+      display: none;
+      box-shadow: 0 -4px 20px rgba(0,230,77,0.4);
+    }
+    #sticky-cta a {
+      color: #000;
+      font-weight: 900;
+      font-size: 16px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: block;
+    }
+
+    /* ========================================
+       RESPONSIVE TWEAKS
+    ======================================== */
+    @media (max-width: 480px) {
+      /* legado */
+      .testimonial-videos { grid-template-columns: 1fr; max-width: 300px; }
+      .bonus-card img { height: 85px; }
+      .bonus-card { padding: 16px 10px 12px; }
+
+      /* [1] STICKY BAR — máximo 48px, 1 linha */
+      #sticky-cta {
+        height: 48px;
+        max-height: 48px;
+        padding: 0 16px;
+        overflow: hidden;
+      }
+      #sticky-cta a {
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 48px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* [2] URGENCY BAR — 1 linha, compacta */
+      #urgency-bar {
+        font-size: 12px;
+        padding: 7px 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      body {
+        padding-top: 28px; /* acompanha a nova altura da urgency bar */
+      }
+
+      /* [3] SOCIAL PROOF POPUP — canto inferior esquerdo, pequeno */
+      #sp-popup {
+        bottom: 60px;
+        left: 12px;
+        right: auto;
+        max-width: 260px;
+        width: auto;
+        padding: 10px 14px;
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        z-index: 998;
+      }
+
+      /* [4] ESPAÇAMENTOS GERAIS */
+      .container {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      .section {
+        padding: 40px 0;
+      }
+      .bonus-grid {
+        gap: 12px;
+      }
+      .feature-list {
+        gap: 12px;
+      }
+      .section-title {
+        font-size: 22px;
+      }
+      .hero-subtitle {
+        font-size: 14px;
+      }
+
+      /* [5] BOTÕES CTA INTERNOS — proporcionais */
+      .btn-cta {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 16px 24px;
+        font-size: 16px;
+        border-radius: 10px;
+      }
+    }
+
+    /* telas muito pequenas: urgency bar ainda menor */
+    @media (max-width: 379px) {
+      #urgency-bar {
+        font-size: 11px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .bonus-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================
+     [1] URGENCY BAR (fixed top)
+================================ -->
+<div id="urgency-bar">
+  🏍️ +25 milhões de motos no Brasil — a sua ainda não tem adesivo? Desconto só HOJE &mdash; <span id="today-date"></span>
+</div>
+
+<!-- ================================
+     [2] HERO
+================================ -->
+<section id="hero">
+  <div class="container">
+
+    <h1 class="reveal">
+      <em>1.500 Adesivos Prontos</em> pra Sua Moto —<br>Só Baixar e Mandar Imprimir
+    </h1>
+
+    <div class="hero-video-wrap reveal">
+      <video
+        controls
+        playsinline
+        preload="none"
+        poster="https://feitopravoce.fun/wp-content/uploads/2025/07/Copia-de-VSL-2.png">
+        <source src="https://feitopravoce.fun/wp-content/uploads/2025/07/Mini-vsl.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <p class="hero-subtitle reveal">
+      Sem máquina de corte, sem CorelDRAW, sem complicação.<br>
+      Baixou, mandou pra gráfica e colou na sua moto.<br>
+      <strong style="color:#fff">Qualquer pessoa consegue.</strong>
+    </p>
+
+    <div class="hero-price reveal">
+      <span class="price-old">De R$197,00</span>
+      <span class="price-label">Por apenas</span>
+      <span class="price-big">R$&nbsp;19<span class="price-cents">,00</span></span>
+    </div>
+
+    <div class="cta-wrap reveal">
+      <a href="#compra" class="btn-cta">QUERO ESSE PACK AGORA</a>
+      <p class="microtext">🔒 Compra segura &middot; Acesso imediato &middot; 30 dias de garantia</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [3] É PARA VOCÊ QUE
+================================ -->
+<section id="para-voce" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      O PACK DE ADESIVOS PRO É PARA <span style="color:var(--green)">VOCÊ</span> QUE:
+    </h2>
+
+    <img
+      src="https://feitopravoce.fun/wp-content/uploads/2025/08/150-adesivos-pro-2-1-e1756303202134.png"
+      alt="Mockup Pack de Adesivos Pro"
+      class="mockup-img reveal"
+      loading="lazy">
+
+    <ul class="feature-list">
+      <li class="neg reveal"><span class="ico-x">✗</span> Quer personalizar sua moto mas não sabe por onde começar</li>
+      <li class="neg reveal"><span class="ico-x">✗</span> Achou o adesivo caro demais na loja</li>
+      <li class="neg reveal"><span class="ico-x">✗</span> Tentou fazer sozinho e ficou feio</li>
+      <li class="neg reveal"><span class="ico-x">✗</span> Não tem máquina de corte nem sabe usar CorelDRAW</li>
+      <li class="neg reveal"><span class="ico-x">✗</span> Quer que sua moto seja única sem gastar muito</li>
+    </ul>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [4] COM O PACK VOCÊ GANHA
+================================ -->
+<section id="voce-ganha" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      COM O PACK DE ADESIVOS PRO VOCÊ <span style="color:var(--green)">GANHA:</span>
+    </h2>
+
+    <ul class="feature-list">
+      <li class="pos reveal"><span class="ico-ok">✓</span> +1.500 adesivos prontos pra qualquer moto, carro ou capacete</li>
+      <li class="pos reveal"><span class="ico-ok">✓</span> Arquivo em PDF — manda direto pra gráfica ou imprime em casa</li>
+      <li class="pos reveal"><span class="ico-ok">✓</span> Não precisa de máquina, não precisa de CorelDRAW</li>
+      <li class="pos reveal"><span class="ico-ok">✓</span> Qualquer gráfica imprime — gasta menos de R$10 pra personalizar sua moto</li>
+      <li class="pos reveal"><span class="ico-ok">✓</span> Funciona no celular, tablet ou computador — simples do início ao fim</li>
+    </ul>
+
+    <div class="cta-wrap" style="margin-top:40px">
+      <a href="#compra" class="btn-cta reveal">QUERO ESSE PACK AGORA</a>
+      <p class="microtext">🔒 Compra segura &middot; Acesso imediato &middot; 30 dias de garantia</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [5] BÔNUS
+================================ -->
+<section id="bonus" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      Adquirindo <span style="color:var(--green)">HOJE</span> você leva<br>
+      <span style="color:var(--green)">04 Bônus Exclusivos:</span>
+    </h2>
+
+    <div class="bonus-grid">
+
+      <div class="bonus-card reveal">
+        <div class="bonus-badge">100% Grátis</div>
+        <img src="https://feitopravoce.fun/wp-content/uploads/2025/08/bonus-1.png.webp" alt="Bônus 01" loading="lazy">
+        <h3>Bônus 01</h3>
+        <p>Conheças os produtos que vão aumentar a qualidade dos seus envelopamentos.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-badge">100% Grátis</div>
+        <img src="https://feitopravoce.fun/wp-content/uploads/2025/08/bonus-2.png.webp" alt="Bônus 02" loading="lazy">
+        <h3>Bônus 02</h3>
+        <p>Acesso a um catálogo cheio de decorações. Conheça diferentes tipos de materiais para envelopamento.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-badge">100% Grátis</div>
+        <img src="https://feitopravoce.fun/wp-content/uploads/2025/08/bonus-3.png.webp" alt="Bônus 03" loading="lazy">
+        <h3>Bônus 03</h3>
+        <p>Descubra como minimizar riscos e danos no envelopamento.</p>
+      </div>
+
+      <div class="bonus-card reveal">
+        <div class="bonus-badge">100% Grátis</div>
+        <img src="https://feitopravoce.fun/wp-content/uploads/2025/08/corel2024-sites-42kz387rge-removebg-preview-1.png" alt="Bônus 04 CorelDRAW" loading="lazy">
+        <h3>Bônus 04</h3>
+        <p>Acesso vitalício à licença do CorelDRAW</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [6] DEPOIMENTOS
+================================ -->
+<section id="depoimentos" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      O que dizem sobre o<br>
+      <span style="color:var(--green)">Pack de Adesivos Pro</span>
+    </h2>
+
+    <!-- Video testimonials -->
+    <div class="testimonial-videos reveal">
+
+      <div
+        class="vid-thumb"
+        id="vid-1"
+        data-src="https://feitopravoce.fun/wp-content/uploads/2025/07/Copia-de-Design-sem-nome-2.mp4"
+        onclick="playTestimonial('vid-1')">
+        <img
+          src="https://feitopravoce.fun/wp-content/uploads/2025/07/Captura-de-Tela-2025-07-31-as-01.47.22.png"
+          alt="Depoimento em vídeo 1"
+          loading="lazy">
+        <div class="play-overlay"><div class="play-circle">&#9654;</div></div>
+        <video playsinline controls preload="none"></video>
+      </div>
+
+      <div
+        class="vid-thumb"
+        id="vid-2"
+        data-src="https://feitopravoce.fun/wp-content/uploads/2025/07/Copia-de-Design-sem-nome-1-1.mp4"
+        onclick="playTestimonial('vid-2')">
+        <img
+          src="https://feitopravoce.fun/wp-content/uploads/2025/07/Captura-de-Tela-2025-07-31-as-01.47.56.png"
+          alt="Depoimento em vídeo 2"
+          loading="lazy">
+        <div class="play-overlay"><div class="play-circle">&#9654;</div></div>
+        <video playsinline controls preload="none"></video>
+      </div>
+
+    </div>
+
+    <!-- WhatsApp screenshot carousel -->
+    <div class="carousel-outer reveal">
+      <div class="carousel-viewport" id="carousel-vp">
+        <div class="carousel-track" id="carousel-track">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/1-1-576x1024.png" alt="Depoimento WhatsApp" loading="lazy">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/2-1-576x1024.png" alt="Depoimento WhatsApp" loading="lazy">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/3-576x1024.png"   alt="Depoimento WhatsApp" loading="lazy">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/4-576x1024.png"   alt="Depoimento WhatsApp" loading="lazy">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/5-576x1024.png"   alt="Depoimento WhatsApp" loading="lazy">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/6-576x1024.png"   alt="Depoimento WhatsApp" loading="lazy">
+          <img src="https://feitopravoce.fun/wp-content/uploads/2025/07/7-576x1024.png"   alt="Depoimento WhatsApp" loading="lazy">
+        </div>
+      </div>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [7] PREÇOS
+================================ -->
+<section id="compra" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      Sua moto merece ser única.<br>
+      <span style="color:var(--green)">Por menos de R$ 20.</span>
+    </h2>
+
+    <p class="scarcity reveal">⚡ Oferta válida por tempo limitado</p>
+
+    <div class="plans-grid">
+
+      <!-- PLANO BÁSICO -->
+      <div class="plan-card reveal">
+        <div class="plan-name">⭐ Plano Básico</div>
+
+        <ul class="plan-items">
+          <li><span class="c">✓</span> Pack com +1500 adesivos e vetores prontos (CDR e PDF)</li>
+          <li><span class="c">✓</span> Acesso Imediato e Vitalício</li>
+          <li><span class="c">✓</span> Pagamento Único, Sem mensalidade</li>
+          <li><span class="c">✓</span> Garantia de 30 dias</li>
+        </ul>
+
+        <span class="plan-from">DE R$97,00</span>
+        <span class="plan-for-label">POR APENAS</span>
+        <span class="plan-price"><sup>R$</sup>19<sub>,00</sub></span>
+
+        <a href="https://pay.kirvano.com/4a862ae8-2c45-43cf-8873-a6ae702e0663"
+           class="btn-cta"
+           style="margin-bottom:10px">COMPRAR AGORA MESMO</a>
+        <p class="microtext">🔒 Compra segura &middot; Acesso imediato &middot; 30 dias de garantia</p>
+        <img
+          src="https://feitopravoce.fun/wp-content/uploads/2025/06/compra1-1-e1751161498481.png"
+          alt="Selos de pagamento seguro"
+          class="seal"
+          loading="lazy">
+      </div>
+
+      <!-- PLANO COMPLETÃO -->
+      <div class="plan-card featured reveal">
+        <div class="plan-most-sold">⭐ MAIS VENDIDO</div>
+        <div class="plan-name" style="margin-top:8px">Plano Completão</div>
+
+        <img
+          src="https://feitopravoce.fun/wp-content/uploads/2025/08/150-adesivos-pro-2-1-e1756303202134.png"
+          alt="Mockup Pack Completão"
+          class="plan-mock"
+          loading="lazy">
+
+        <ul class="plan-items">
+          <li><span class="c">✓</span> Pack com +1500 adesivos e vetores prontos (CDR e PDF)</li>
+          <li><span class="c">✓</span> Backup Vitalício + Atualizações Futuras</li>
+          <li><span class="c">✓</span> Bônus 01 (Produto para acabamentos)</li>
+          <li><span class="c">✓</span> Bônus 02 (Catálogos de Envelopamento)</li>
+          <li><span class="c">✓</span> Bônus 03 (Riscos e Danos)</li>
+          <li><span class="c">✓</span> Bônus 04 (Licença do CorelDraw)</li>
+          <li><span class="c">✓</span> Bônus Extra: Kit de Frases Automotivas (CDR + PDF)</li>
+          <li><span class="c">✓</span> Bônus Extra: Mini Guia &mdash; Como Cobrar Seus Adesivos e Serviços de Plotagem</li>
+          <li><span class="c">✓</span> Garantia de 30 dias</li>
+          <li><span class="c">✓</span> Pagamento Único, Sem mensalidade</li>
+        </ul>
+
+        <span class="plan-from">DE R$147,00</span>
+        <span class="plan-for-label">POR APENAS</span>
+        <span class="plan-price"><sup>R$</sup>27<sub>,90</sub></span>
+
+        <a href="https://pay.kirvano.com/4c6f94fd-430e-4c94-9fef-16ce2a5e1ab9"
+           class="btn-cta"
+           style="margin-bottom:10px">COMPRAR AGORA MESMO!</a>
+        <p class="microtext">🔒 Compra segura &middot; Acesso imediato &middot; 30 dias de garantia</p>
+        <img
+          src="https://feitopravoce.fun/wp-content/uploads/2025/06/compra1-1-e1751161498481.png"
+          alt="Selos de pagamento seguro"
+          class="seal"
+          loading="lazy">
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [8] COMO VOCÊ VAI RECEBER
+================================ -->
+<section id="como-receber" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">
+      Como você vai receber<br>o Pack e os bônus
+    </h2>
+
+    <div class="receive-grid">
+      <div class="receive-card reveal">
+        <span class="icon">📧</span>
+        <h3>E-mail e WhatsApp</h3>
+        <p>Receba o Pack de Adesivos Pro e os bônus direto no seu e-mail e também no WhatsApp. Simples e rápido.</p>
+      </div>
+      <div class="receive-card reveal">
+        <span class="icon">📱</span>
+        <h3>Acesso Fácil</h3>
+        <p>Você pode acessar o conteúdo no celular, tablet ou computador, os arquivos são no formato CDR e PDF. Funciona em qualquer dispositivo.</p>
+      </div>
+      <div class="receive-card reveal">
+        <span class="icon">🖨️</span>
+        <h3>Como usar sem máquina de corte</h3>
+        <p>Recebeu o arquivo em PDF? É só abrir, escolher o adesivo que quer e mandar por WhatsApp pra qualquer gráfica da sua cidade. Eles imprimem e recortam pra você.</p>
+      </div>
+    </div>
+
+    <p class="receive-note reveal">Sem complicação, sem demora. Acesso imediato após o pagamento.</p>
+
+    <div class="cta-wrap">
+      <a href="#compra" class="btn-cta reveal">QUERO ESSE PACK AGORA</a>
+      <p class="microtext">🔒 Compra segura &middot; Acesso imediato &middot; 30 dias de garantia</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [9] FAQ
+================================ -->
+<section id="faq" class="section">
+  <div class="container">
+
+    <h2 class="section-title reveal">PERGUNTAS FREQUENTES</h2>
+
+    <div class="faq-list">
+
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Preciso ter máquina de corte ou CorelDRAW?
+          <span class="faq-arrow">&#9654;</span>
+        </div>
+        <div class="faq-a">
+          Não precisa de nada disso! Os arquivos vêm em PDF. É só abrir no celular ou computador e mandar pra qualquer gráfica da sua cidade imprimir. Simples assim. Quem tem máquina de corte também pode usar os arquivos CDR.
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Como eu recebo o pack?
+          <span class="faq-arrow">&#9654;</span>
+        </div>
+        <div class="faq-a">
+          Você recebe o link de download no e-mail e WhatsApp logo após a confirmação do pagamento.
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Preciso pagar algo depois?
+          <span class="faq-arrow">&#9654;</span>
+        </div>
+        <div class="faq-a">
+          Não! É pagamento único. Depois que compra, o acesso é vitalício.
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Consigo usar mesmo sem saber nada de design?
+          <span class="faq-arrow">&#9654;</span>
+        </div>
+        <div class="faq-a">
+          Com certeza! O arquivo já vem pronto, você não precisa editar nada. É só escolher o adesivo que gostou, mandar pra gráfica e colar na sua moto. Zero conhecimento técnico necessário.
+        </div>
+      </div>
+
+      <div class="faq-item reveal">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          Tem garantia?
+          <span class="faq-arrow">&#9654;</span>
+        </div>
+        <div class="faq-a">
+          Sim! Você tem 30 dias de garantia. Se por qualquer motivo não curtir o pack, é só pedir o reembolso que devolvemos 100% do valor, sem enrolação.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta-wrap">
+      <a href="#compra" class="btn-cta reveal">QUERO ESSE PACK AGORA</a>
+      <p class="microtext">🔒 Compra segura &middot; Acesso imediato &middot; 30 dias de garantia</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ================================
+     [10] PIRATARIA
+================================ -->
+<section id="pirataria" class="section" style="padding-bottom:80px">
+  <div class="container">
+
+    <h2 class="reveal">PIRATARIA É <span class="crime">CRIME</span></h2>
+
+    <p class="reveal">
+      A venda do Produto só pode ser realizada através deste site. Qualquer outro site onde
+      você encontre este produto é uma FALSIFICAÇÃO e vai contra as leis de direito autoral
+      vigentes no Brasil. Proteja-se, adquira sempre o original e evite golpes.
+    </p>
+
+    <img
+      src="http://feitopravoce.fun/wp-content/uploads/2025/07/ChatGPT-Image-9-de-jul.-de-2025-23_31_44.png"
+      alt="Logo Feito Pra Você"
+      loading="lazy"
+      class="reveal">
+
+  </div>
+</section>
+
+<!-- ================================
+     SOCIAL PROOF POPUP
+================================ -->
+<div id="sp-popup">
+  <div class="sp-row">
+    <span class="sp-emoji">🛒</span>
+    <div>
+      <div class="sp-msg">
+        <span class="sp-name" id="sp-name">Fernando</span> <span id="sp-action">acabou de comprar o Pack Completão ✅</span>
+      </div>
+      <div class="sp-ago">há poucos minutos</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================
+     STICKY CTA (mobile only)
+================================ -->
+<div id="sticky-cta">
+  <a href="#compra">🏍️ PERSONALIZAR MINHA MOTO &mdash; R$ 19,00</a>
+</div>
+
+<!-- ================================
+     JAVASCRIPT
+================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ── 1. DATA DINÂMICA ─────────────────────────────── */
+  var d = new Date();
+  document.getElementById('today-date').textContent =
+    d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+
+  /* ── 2. SCROLL REVEAL (IntersectionObserver) ─────── */
+  var revealEls = document.querySelectorAll('.reveal');
+  var revealObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealEls.forEach(function (el) { revealObs.observe(el); });
+
+  /* ── 3. FAQ ACCORDION ────────────────────────────── */
+  window.toggleFaq = function (questionEl) {
+    var item = questionEl.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function (i) {
+      i.classList.remove('open');
+    });
+    if (!isOpen) item.classList.add('open');
+  };
+
+  /* ── 4. TESTIMONIAL VIDEO LAZY LOAD ─────────────── */
+  window.playTestimonial = function (id) {
+    var wrap = document.getElementById(id);
+    if (wrap.classList.contains('playing')) return;
+    var vid = wrap.querySelector('video');
+    vid.src = wrap.dataset.src;
+    wrap.classList.add('playing');
+    vid.play().catch(function () {});
+  };
+
+  /* ── 5. CAROUSEL ─────────────────────────────────── */
+  (function () {
+    var track  = document.getElementById('carousel-track');
+    var dotsEl = document.getElementById('carousel-dots');
+    var vp     = document.getElementById('carousel-vp');
+    var imgs   = track.querySelectorAll('img');
+    var total  = imgs.length;
+    var cur    = 0;
+    var timer;
+    var touchStartX = 0;
+
+    /* build dots */
+    for (var i = 0; i < total; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.dataset.i = i;
+      (function (idx) {
+        dot.addEventListener('click', function () { goTo(idx); resetTimer(); });
+      })(i);
+      dotsEl.appendChild(dot);
+    }
+
+    function updateDots () {
+      dotsEl.querySelectorAll('.carousel-dot').forEach(function (d, idx) {
+        d.classList.toggle('active', idx === cur);
+      });
+    }
+
+    function goTo (idx) {
+      cur = (idx % total + total) % total;
+      track.style.transform = 'translateX(-' + cur * 100 + '%)';
+      updateDots();
+    }
+
+    function next () { goTo(cur + 1); }
+
+    function resetTimer () {
+      clearInterval(timer);
+      timer = setInterval(next, 3000);
+    }
+
+    resetTimer();
+
+    /* swipe support */
+    vp.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+      clearInterval(timer);
+    }, { passive: true });
+
+    vp.addEventListener('touchend', function (e) {
+      var dx = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(dx) > 38) goTo(dx > 0 ? cur + 1 : cur - 1);
+      resetTimer();
+    }, { passive: true });
+  })();
+
+  /* ── 6. SOCIAL PROOF POPUP ───────────────────────── */
+  (function () {
+    var names   = ['Fernando','Lucas','Rodrigo','Marcos','Thiago','Diego','André','Rafael','Paulo','Bruno'];
+    var actions = [
+      'acabou de personalizar a moto dele 🏍️',
+      'acabou de baixar o pack agora ⚡',
+      'garantiu o pack por R$ 19 🔥',
+      'acabou de comprar o Pack Completão ✅'
+    ];
+    var popup    = document.getElementById('sp-popup');
+    var nameEl   = document.getElementById('sp-name');
+    var actionEl = document.getElementById('sp-action');
+    var hideT;
+
+    function show () {
+      nameEl.textContent   = names[Math.floor(Math.random() * names.length)];
+      actionEl.textContent = actions[Math.floor(Math.random() * actions.length)];
+      popup.classList.add('show');
+      clearTimeout(hideT);
+      hideT = setTimeout(function () { popup.classList.remove('show'); }, 4500);
+    }
+
+    function scheduleNext () {
+      var delay = 15000 + Math.random() * 15000; /* 15–30 s */
+      setTimeout(function () { show(); scheduleNext(); }, delay);
+    }
+
+    /* first appearance after 5 s */
+    setTimeout(function () { show(); scheduleNext(); }, 5000);
+  })();
+
+  /* ── 7. STICKY CTA BAR (mobile) ─────────────────── */
+  (function () {
+    var bar     = document.getElementById('sticky-cta');
+    var visible = false;
+
+    window.addEventListener('scroll', function () {
+      if (window.innerWidth > 768) { bar.style.display = 'none'; return; }
+      if (window.scrollY > 400 && !visible) {
+        bar.style.display = 'block';
+        visible = true;
+      }
+    }, { passive: true });
+  })();
+
+})();
+</script>
+
+</body>
+</html>
